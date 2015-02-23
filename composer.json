@@ -1,0 +1,31 @@
+{
+    "name": "danielbadura/redmine-api-client",
+    "description": "A Redmine-Api Client",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "DanielBadura",
+            "email": "d.m.badura@googlemail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~5.0",
+        "jms/serializer": "0.16.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0",
+        "symfony/var-dumper": "~2.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "DanielBadura\\Redmine\\Api\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DanielBadura\\Redmine\\Api\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}
