@@ -70,6 +70,28 @@ class ProjectRepository implements RepositoryInterface
     }
 
     /**
+     * @param Project $project
+     *
+     * @return bool
+     */
+    public function delete(Project $project)
+    {
+        if (! $this->find($project->id)) {
+            return false;
+        }
+
+        $options = [];
+
+        $result = $this->client->delete('project/' . $project->id . '.json', $options);
+
+        if ($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param $json
      *
      * @return Project|Project[]
