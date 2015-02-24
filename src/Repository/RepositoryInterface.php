@@ -1,9 +1,10 @@
 <?php
 
-
 namespace DanielBadura\Redmine\Api\Repository;
 
-
+/**
+ * @author Daniel Badura <d.m.badura@googlemail.com>
+ */
 interface RepositoryInterface
 {
     /**
