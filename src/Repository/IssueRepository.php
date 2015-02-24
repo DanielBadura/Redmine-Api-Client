@@ -55,7 +55,7 @@ class IssueRepository implements RepositoryInterface
     /**
      * @param Issue $issue
      *
-     * @return bool
+     * @return bool|\GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface
      */
     public function save(Issue $issue)
     {
