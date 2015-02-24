@@ -5,6 +5,7 @@ namespace DanielBadura\Redmine\Api;
 use DanielBadura\Redmine\Api\Exception\ClientException;
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 use DanielBadura\Redmine\Api\Repository\IssueRepository;
+use DanielBadura\Redmine\Api\Repository\ProjectRepository;
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Message\FutureResponse;
@@ -90,6 +91,14 @@ class Client
     public function getIssueRepository()
     {
         return new IssueRepository($this);
+    }
+
+    /**
+     * @return ProjectRepository
+     */
+    public function getProjectRepository()
+    {
+        return new ProjectRepository($this);
     }
 
     /**
