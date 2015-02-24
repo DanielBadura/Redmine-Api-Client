@@ -36,7 +36,7 @@ class UserRepository implements RepositoryInterface
         // TODO: Implement find() method.
         $result = $this->client->get('users/' . $id . '.json');
 
-        $result = json_decode($result, true); //@TODO Make an IssueResult Struct, so I don't need to hack this with json decode
+        $result = json_decode($result, true); //@TODO Make an UserResult Struct, so I don't need to hack this with json decode
         $result = json_encode($result['issue']); //@TODO and json encode, this is not nice
 
         return $this->deserialize($result);
@@ -58,6 +58,52 @@ class UserRepository implements RepositoryInterface
     }
 
     /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function save(User $user)
+    {
+        $jsonUser = $this->serialize($user);
+
+        $options = ['body' => $jsonUser];
+
+        if($this->find($user->id)) {
+            $result = $this->client->put('user/' . $user->id . '.json', $options);
+        } else {
+            $result = $this->client->post('user.json', $options);
+        }
+
+        if($result) {
+            return $result;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return bool
+     */
+    public function delete(User $user)
+    {
+        if(! $this->find($user->id)) {
+            return false;
+        }
+
+        $options = [];
+
+        $result = $this->client->delete('user/' . $user->id . '.json', $options);
+
+        if($result) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Serialze an entity from a json to an object
      *
      * @param $json
@@ -66,7 +112,7 @@ class UserRepository implements RepositoryInterface
      */
     public function serialize($json)
     {
-        // TODO: Implement serialize() method.
+        return $this->client->getSerializer()->serialize($json, 'DanielBadura\Redmine\Api\Struct\User', 'json');
     }
 
     /**
@@ -78,6 +124,6 @@ class UserRepository implements RepositoryInterface
      */
     public function deserialize($object)
     {
-        // TODO: Implement deserialize() method.
+        return $this->client->getSerializer()->deserialize($object, 'DanielBadura\Redmine\Api\Struct\User', 'json');
     }
 }
