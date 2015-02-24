@@ -68,28 +68,28 @@ class Issue
     /**
      * @var \DateTime
      *
-     * @JMS\Type("")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      */
     public $startDate;
 
     /**
      * @var \DateTime
      *
-     * @JMS\Type("")
+     * @JMS\Type("DateTime<'Y-m-d'>")
      */
     public $dueDate;
 
     /**
      * @var \DateTime
      *
-     * @JMS\Type("")
+     * @JMS\Type("DateTime<'Y-m-d\TH:i:s\Z'>")
      */
     public $createdOn;
 
     /**
      * @var \DateTime
      *
-     * @JMS\Type("")
+     * @JMS\Type("DateTime<'Y-m-d\TH:i:s\Z'>")
      */
     public $updatedOn;
 
