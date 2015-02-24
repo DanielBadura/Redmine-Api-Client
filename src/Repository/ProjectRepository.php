@@ -3,6 +3,7 @@
 namespace DanielBadura\Redmine\Api\Repository;
 
 use DanielBadura\Redmine\Api\Client;
+use DanielBadura\Redmine\Api\Struct\Project;
 
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
@@ -42,6 +43,30 @@ class ProjectRepository implements RepositoryInterface
         $result = $this->client->get('/projects.json');
 
         return $this->deserialize($result);
+    }
+
+    /**
+     * @param Project $project
+     *
+     * @return bool|\GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface
+     */
+    public function save(Project $project)
+    {
+        $projectJson = $this->serialize($project);
+
+        $options = ['body' => $projectJson];
+
+        if ($this->find($project->id)) {
+            $result = $this->client->put('project/' . $project->id . '.json', $options);
+        } else {
+            $result = $this->client->post('project.json', $options);
+        }
+
+        if ($result) {
+            return $result;
+        }
+
+        return false;
     }
 
     /**
