@@ -1,9 +1,9 @@
 <?php
 
-
 namespace DanielBadura\Redmine\Api\Repository;
 
 use DanielBadura\Redmine\Api\Client;
+use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 use DanielBadura\Redmine\Api\Struct\Issue;
 use DanielBadura\Redmine\Api\Struct\User;
 
@@ -28,32 +28,39 @@ class IssueRepository implements RepositoryInterface
     /**
      * @param $id
      *
+     * @throws RedmineApiException
+     *
      * @return Issue
      */
     public function find($id)
     {
-        $result = $this->client->get('issue/' . $id . '.json');
+        $result = $this->client->get('issues/' . $id . '.json');
 
-        $result = json_decode($result, true); //@TODO Make an IssueResult Struct, so I don't need to hack this with json decode
-        $result = json_encode($result['issue']); //@TODO and json encode, this is not nice
+        if (! $result) {
+            throw new RedmineApiException('Could not find the Issue');
+        }
 
         return $this->deserialize($result);
     }
 
     /**
+     * @throws RedmineApiException
+     *
      * @return Issue[]
      */
     public function findAll()
     {
-        $result = $this->client->get('issue.json');
+        $issueResultReposiotry = new IssueResultRepository($this->client);
 
-        //@TODO same as at find()
+        $issueResult = $issueResultReposiotry->find();
 
-        return $this->deserialize($result);
+        return $issueResult->issues;
     }
 
     /**
      * @param Issue $issue
+     *
+     * @throws RedmineApiException
      *
      * @return bool|\GuzzleHttp\Message\FutureResponse|\GuzzleHttp\Message\ResponseInterface
      */
@@ -63,21 +70,23 @@ class IssueRepository implements RepositoryInterface
 
         $options = ['body' => $jsonIssue];
 
-        if ($this->find($issue->id)) {
-            $result = $this->client->put('issue/' . $issue->id . '.json', $options);
+        if (false && $this->find($issue->id)) {
+            $result = $this->client->put('issues/' . $issue->id . '.json', $options);
         } else {
-            $result = $this->client->post('issue.json', $options);
+            $result = $this->client->post('issues.json', $options);
         }
 
-        if ($result) {
-            return $result;
+        if (! $result) {
+            throw new RedmineApiException('Could not save the Issue.');
         }
 
-        return false;
+        return $result;
     }
 
     /**
      * @param Issue $issue
+     *
+     * @throws RedmineApiException
      *
      * @return bool
      */
@@ -89,10 +98,10 @@ class IssueRepository implements RepositoryInterface
 
         $options = [];
 
-        $result = $this->client->delete('issue/' . $issue->id . '.json', $options);
+        $result = $this->client->delete('issues/' . $issue->id . '.json', $options);
 
-        if ($result) {
-            return true;
+        if (! $result) {
+            throw new RedmineApiException('Could not delte the Issue.');
         }
 
         return false;
@@ -127,7 +136,7 @@ class IssueRepository implements RepositoryInterface
             'body' => $body
         ];
 
-        $result = $this->client->post('/issue/' . $issue->id . '/watchers.json', $options);
+        $result = $this->client->post('/issues/' . $issue->id . '/watchers.json', $options);
 
         if (! $result) {
             return false;
@@ -154,7 +163,7 @@ class IssueRepository implements RepositoryInterface
             return false;
         }
 
-        $result = $this->client->delete('/issue/' . $issue->id . '/watchers/' . $user->id . '.json');
+        $result = $this->client->delete('/issues/' . $issue->id . '/watchers/' . $user->id . '.json');
 
         if (! $result) {
             return false;
@@ -182,4 +191,4 @@ class IssueRepository implements RepositoryInterface
     {
         return $this->client->getSerializer()->serialize($object, 'json');
     }
-} 
+}

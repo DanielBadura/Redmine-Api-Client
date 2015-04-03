@@ -19,14 +19,14 @@ class Issue
     /**
      * @var User
      *
-     * @JMS\Type("User")
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\User")
      */
     public $author;
 
     /**
      * @var User
      *
-     * @JMS\Type("User")
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\User")
      */
     public $assignedTo;
 
