@@ -21,7 +21,7 @@ class User
      *
      * @JMS\Type("string")
      */
-    public $name;
+    public $login;
 
     /**
      * @var string
@@ -36,4 +36,25 @@ class User
      * @JMS\Type("string")
      */
     public $lastname;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $mail;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Membership>")
+     */
+    public $memberships;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Group>")
+     */
+    public $groups;
 } 

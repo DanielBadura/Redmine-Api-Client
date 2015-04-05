@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: marcogiesen
- * Date: 24.02.15
- * Time: 15:52
- */
 
 namespace DanielBadura\Redmine\Api\Repository;
 
-
+/**
+ * @author Marco Giesen <marco.giesen93@gmail.com>
+ */
 class UserRepository implements RepositoryInterface
 {
     /**
@@ -37,7 +33,7 @@ class UserRepository implements RepositoryInterface
         $result = $this->client->get('users/' . $id . '.json');
 
         $result = json_decode($result, true); //@TODO Make an UserResult Struct, so I don't need to hack this with json decode
-        $result = json_encode($result['issue']); //@TODO and json encode, this is not nice
+        $result = json_encode($result['users']); //@TODO and json encode, this is not nice
 
         return $this->deserialize($result);
     }
