@@ -40,14 +40,14 @@ class Project
     /**
      * @var \DateTime
      *
-     * @JMS\Type()
+     * @JMS\Type("DateTime<'D M j h:i:s O Y'>")
      */
     public $createdOn;
 
     /**
      * @var \DateTime
-     *
-     * @JMS\Type()
+     *Sat Sep 29 12:03:04 +0200 2007
+     * @JMS\Type("DateTime<'D M j h:i:s O Y'>")
      */
     public $updatedOn;
 

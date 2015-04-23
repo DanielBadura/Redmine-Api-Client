@@ -52,14 +52,14 @@ class ProjectRepository implements RepositoryInterface
      */
     public function save(Project $project)
     {
-        $projectJson = $this->serialize($project);
+        $projectJson = $this->serialize(['project' => $project]);
 
         $options = ['body' => $projectJson];
 
-        if ($this->find($project->id)) {
-            $result = $this->client->put('project/' . $project->id . '.json', $options);
+        if ($project->id && $this->find($project->id)) {
+            $result = $this->client->put('projects/' . $project->id . '.json', $options);
         } else {
-            $result = $this->client->post('project.json', $options);
+            $result = $this->client->post('projects.json', $options);
         }
 
         if ($result) {
