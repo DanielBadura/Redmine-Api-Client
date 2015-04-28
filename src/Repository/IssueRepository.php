@@ -66,7 +66,7 @@ class IssueRepository implements RepositoryInterface
      */
     public function save(Issue $issue)
     {
-        $jsonIssue = $this->serialize($issue);
+        $jsonIssue = $this->serialize(['issue' => $issue]);
 
         $options = ['body' => $jsonIssue];
 
