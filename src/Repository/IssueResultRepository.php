@@ -8,7 +8,7 @@ use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class IssueResultRepository
+class IssueResultRepository implements ResultRepositoryInterface
 {
     /**
      * @var Client
@@ -33,7 +33,7 @@ class IssueResultRepository
         $result = $this->client->get('issues.json');
 
         if (! $result) {
-            throw new RedmineApiException('Could not find any issues..');
+            throw new RedmineApiException('Could not find any issues.');
         }
 
         return $this->deserialize($result);

@@ -5,7 +5,7 @@ namespace DanielBadura\Redmine\Api\Repository;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-interface RepositoryInterface
+interface RepositoryInterface extends SerializerInterface
 {
     /**
      * Find one entity by Id
@@ -22,22 +22,4 @@ interface RepositoryInterface
      * @return mixed
      */
     public function findAll();
-
-    /**
-     * Serialze an entity from a json to an object
-     *
-     * @param $json
-     *
-     * @return mixed
-     */
-    public function serialize($json);
-
-    /**
-     * Deserialize an object to a json string
-     *
-     * @param $object
-     *
-     * @return mixed
-     */
-    public function deserialize($object);
 } 
