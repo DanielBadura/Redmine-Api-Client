@@ -70,17 +70,17 @@ class IssueRepository implements RepositoryInterface
 
         $options = ['body' => $jsonIssue];
 
-        if (false && $this->find($issue->id)) {
+        if ($issue->id && $this->find($issue->id)) {
             $result = $this->client->put('issues/' . $issue->id . '.json', $options);
         } else {
             $result = $this->client->post('issues.json', $options);
         }
 
-        if (! $result) {
-            throw new RedmineApiException('Could not save the Issue.');
+        if ($result) {
+            return $result;
         }
 
-        return $result;
+        return false;
     }
 
     /**
@@ -101,7 +101,7 @@ class IssueRepository implements RepositoryInterface
         $result = $this->client->delete('issues/' . $issue->id . '.json', $options);
 
         if (! $result) {
-            throw new RedmineApiException('Could not delte the Issue.');
+            throw new RedmineApiException('Could not delete the Issue.');
         }
 
         return false;

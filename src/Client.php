@@ -158,7 +158,7 @@ class Client
         try {
             /** @var Response $result */
             $result = $this->guzzle->post($path, $this->options);
-        } catch (RequestException $requestException) {
+        } catch (RequestException $requestException) {  
             throw new ClientException('Could not create.', 0, $requestException);
         }
 

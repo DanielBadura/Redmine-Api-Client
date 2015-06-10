@@ -1,5 +1,6 @@
 <?php
 
+
 namespace DanielBadura\Redmine\Api\Struct;
 
 use JMS\Serializer\Annotation as JMS;
@@ -7,19 +8,19 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class IssueResult 
+class Priority
 {
-    /**
-     * @var Issue
-     *
-     * @JMS\Type("array<DanielBadura\Redmine\Api\Struct\Issue>")
-     */
-    public $issues;
-
     /**
      * @var int
      *
      * @JMS\Type("integer")
      */
-    public $issueMaxCount;
+    public $id;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $name;
 } 

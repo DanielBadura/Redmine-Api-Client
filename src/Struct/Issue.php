@@ -33,21 +33,21 @@ class Issue
     /**
      * @var Status
      *
-     * @JMS\Type("Status")
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\Status")
      */
     public $status;
 
     /**
      * @var Tracker
      *
-     * @JMS\Type("Tracker")
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\Tracker")
      */
     public $tracker;
 
     /**
      * @var Priority
      *
-     * @JMS\Type("Priority")
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\Priority")
      */
     public $priority;
 
@@ -110,14 +110,14 @@ class Issue
     /**
      * @var CustomField[]
      *
-     * @JMS\Type("array<CustomField>")
+     * @JMS\Type("array<DanielBadura\Redmine\Api\Struct\CustomField>")
      */
     public $customsFields;
 
     /**
      * @var Journal[]
      *
-     * @JMS\Type("array<Journal>")
+     * @JMS\Type("array<DanielBadura\Redmine\Api\Struct\Journal>")
      */
     public $journals;
 } 
