@@ -45,11 +45,6 @@ class Client
     protected $impersonateUser = null;
 
     /**
-     * @var array
-     */
-    protected $options;
-
-    /**
      * @var Guzzle
      */
     protected $guzzle;
@@ -58,6 +53,11 @@ class Client
      * @var Serializer
      */
     protected $serializer;
+
+    /**
+     * @var array
+     */
+    protected $options;
 
     /**
      * @param      $url
@@ -71,18 +71,21 @@ class Client
         $this->apiKey     = $apiKey;
         $this->username   = $username;
         $this->password   = $password;
-        $this->options    = [
-            'auth' => [
-                $this->apiKey ? : $this->username,
-                $this->password
-            ]
-        ];
         $this->guzzle     = new Guzzle(
             [
                 'base_url' => $url
             ]
         );
         $this->serializer = SerializerBuilder::create()->build();
+        $this->options    = [
+            'auth' => [
+                $this->apiKey ? : $this->username,
+                $this->password
+            ],
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ]
+        ];
     }
 
     /**
@@ -112,14 +115,11 @@ class Client
      */
     public function get($path, array $options = [])
     {
-        $options = array_merge(
-            $options,
-            $this->options
-        );
+        $this->mergeOptions($options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->get($path, $options);
+            $result = $this->guzzle->get($path, $this->options);
         } catch (RequestException $requestException) {
             if ($requestException->getCode() == 404) {
                 throw new ClientException('Got HTTP Status Code 404, not Found.', 0, $requestException);
@@ -153,14 +153,11 @@ class Client
      */
     public function post($path, array $options = [])
     {
-        $options = array_merge(
-            $options,
-            $this->options
-        );
+        $this->mergeOptions($options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->post($path, $options);
+            $result = $this->guzzle->post($path, $this->options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not create.', 0, $requestException);
         }
@@ -178,14 +175,11 @@ class Client
      */
     public function put($path, array $options = [])
     {
-        $options = array_merge(
-            $options,
-            $this->options
-        );
+        $this->mergeOptions($options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->put($path, $options);
+            $result = $this->guzzle->put($path, $this->options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not update.', 0, $requestException);
         }
@@ -203,14 +197,11 @@ class Client
      */
     public function delete($path, array $options = [])
     {
-        $options = array_merge(
-            $options,
-            $this->options
-        );
+        $this->mergeOptions($options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->delete($path, $options);
+            $result = $this->guzzle->delete($path, $this->options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not delete.', 0, $requestException);
         }
@@ -228,14 +219,11 @@ class Client
      */
     public function patch($path, array $options = [])
     {
-        $options = array_merge(
-            $options,
-            $this->options
-        );
+        $this->mergeOptions($options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->patch($path, $options);
+            $result = $this->guzzle->patch($path, $this->options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not update.', 0, $requestException);
         }
@@ -281,5 +269,13 @@ class Client
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * @param array $options
+     */
+    protected function mergeOptions(array $options)
+    {
+        $this->options = array_merge($this->options, $options);
     }
 } 

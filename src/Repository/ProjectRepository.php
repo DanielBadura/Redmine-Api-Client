@@ -3,6 +3,9 @@
 namespace DanielBadura\Redmine\Api\Repository;
 
 use DanielBadura\Redmine\Api\Client;
+use DanielBadura\Redmine\Api\Exception\ClientException;
+use DanielBadura\Redmine\Api\Exception\RedmineApiException;
+use DanielBadura\Redmine\Api\Exception\RepositoryException;
 use DanielBadura\Redmine\Api\Struct\Project;
 
 /**
@@ -26,10 +29,17 @@ class ProjectRepository implements RepositoryInterface
     /**
      * @param $id
      *
+     * @throws ClientException
+     * @throws RedmineApiException
+     * @throws RepositoryException
      * @return Project
      */
     public function find($id)
     {
+        if ($id === null) {
+            throw new RepositoryException("Can't find project. No id given!");
+        }
+
         $result = $this->client->get('/projects/' . $id . '.json');
 
         return $this->deserialize($result);
@@ -40,9 +50,11 @@ class ProjectRepository implements RepositoryInterface
      */
     public function findAll()
     {
-        $result = $this->client->get('/projects.json');
+        $projectResultReposiotry = new ProjectResultRepository($this->client);
 
-        return $this->deserialize($result);
+        $projectResult = $projectResultReposiotry->find();
+
+        return $projectResult->projects;
     }
 
     /**
@@ -72,17 +84,21 @@ class ProjectRepository implements RepositoryInterface
     /**
      * @param Project $project
      *
+     * @throws ClientException
+     * @throws RepositoryException
      * @return bool
      */
     public function delete(Project $project)
     {
-        if (! $this->find($project->id)) {
-            return false;
+        try {
+            $this->find($project->id);
+        } catch (RepositoryException $e) {
+            throw new RepositoryException("Couldn't delete project. No id given!", $e->getCode(), $e);
         }
 
         $options = [];
 
-        $result = $this->client->delete('project/' . $project->id . '.json', $options);
+        $result = $this->client->delete('projects/' . $project->id . '.json', $options);
 
         if ($result) {
             return true;
@@ -98,6 +114,10 @@ class ProjectRepository implements RepositoryInterface
      */
     public function deserialize($json)
     {
+        // Need a better solution
+        $json = json_decode($json, true);
+        $json = json_encode($json['project']);
+
         return $this->client->getSerializer()->deserialize($json, 'DanielBadura\Redmine\Api\Struct\Project', 'json');
     }
 

@@ -21,14 +21,14 @@ class Project
      *
      * @JMS\Type("string")
      */
-    public $name;
+    public $identifier;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    public $identifier;
+    public $name;
 
     /**
      * @var string
@@ -40,21 +40,44 @@ class Project
     /**
      * @var \DateTime
      *
-     * @JMS\Type("DateTime<'D M j h:i:s O Y'>")
+     * "DateTime<'D M j h:i:s O Y'>"
+     *
+     * @JMS\Type("DateTime<'Y-m-d\TH:i:sO'>")
      */
     public $createdOn;
 
     /**
      * @var \DateTime
      *Sat Sep 29 12:03:04 +0200 2007
-     * @JMS\Type("DateTime<'D M j h:i:s O Y'>")
+     * @JMS\Type("DateTime<'Y-m-d\TH:i:sO'>")
      */
     public $updatedOn;
 
     /**
      * @var bool
      *
-     * @JMS\Type("bool")
+     * @JMS\Type("boolean")
      */
     public $isPublic;
-} 
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $homepage;
+
+    /**
+     * @var Project
+     *
+     * @JMS\Type("Project")
+     */
+    public $parent_id;
+
+    /**
+     * @var bool
+     *
+     * @JMS\Type("boolean")
+     */
+    public $inherit_members;
+}
