@@ -45,6 +45,13 @@ class User
     public $mail;
 
     /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $password;
+
+    /**
      * @var DanielBadura\Redmine\Api\Struct\Membership
      *
      * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Membership>")

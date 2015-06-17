@@ -2,6 +2,10 @@
 
 namespace DanielBadura\Redmine\Api\Repository;
 
+use DanielBadura\Redmine\Api\Struct\User;
+use DanielBadura\Redmine\Api\Exception\RedmineApiException;
+use DanielBadura\Redmine\Api\Struct\UserResult;
+
 /**
  * @author Marco Giesen <marco.giesen93@gmail.com>
  */
@@ -24,16 +28,16 @@ class UserRepository implements RepositoryInterface
      * Find one entity by Id
      *
      * @param $id
-     *
-     * @return mixed
+     * @return User
+     * @throws RedmineApiException
      */
     public function find($id)
     {
-        // TODO: Implement find() method.
         $result = $this->client->get('users/' . $id . '.json');
 
-        $result = json_decode($result, true); //@TODO Make an UserResult Struct, so I don't need to hack this with json decode
-        $result = json_encode($result['user']); //@TODO and json encode, this is not nice
+        if(! $result) {
+            throw new RedmineApiException('Could not find the User');
+        }
 
         return $this->deserialize($result);
     }
@@ -41,16 +45,16 @@ class UserRepository implements RepositoryInterface
     /**
      * Find all entitys
      *
-     * @return mixed
+     * @return User[]
      */
     public function findAll()
     {
-        // TODO: Implement findAll() method.
-        $result = $this->client->get('users.json');
+        $userResultRepository = new UserResultRepository($this->client);
 
-        //@TODO same as at find()
+        /* @var UserResult $userResult */
+        $userResult = $userResultRepository->find();
 
-        return $this->deserialize($result);
+        return $userResult->users;
     }
 
     /**
@@ -74,7 +78,7 @@ class UserRepository implements RepositoryInterface
             return $result;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -96,7 +100,7 @@ class UserRepository implements RepositoryInterface
             return true;
         }
 
-        return false;
+        return null;
     }
 
     /**
