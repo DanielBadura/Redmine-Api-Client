@@ -5,7 +5,8 @@ namespace DanielBadura\Redmine\Api\Struct;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @author Daniel Badura <d.m.badura@googlemail.com>
+ * @author Marco Giesen <marco.giesen93@gmail.com>
+ *
  */
 class User 
 {

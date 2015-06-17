@@ -5,6 +5,7 @@ namespace DanielBadura\Redmine\Api\Repository;
 use DanielBadura\Redmine\Api\Struct\User;
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 use DanielBadura\Redmine\Api\Struct\UserResult;
+use DanielBadura\Redmine\Api\Client;
 
 /**
  * @author Marco Giesen <marco.giesen93@gmail.com>
@@ -38,7 +39,7 @@ class UserRepository implements RepositoryInterface
         if(! $result) {
             throw new RedmineApiException('Could not find the User');
         }
-
+        dump($result);
         return $this->deserialize($result);
     }
 
@@ -122,8 +123,12 @@ class UserRepository implements RepositoryInterface
      *
      * @return mixed
      */
-    public function deserialize($object)
+    public function deserialize($json)
     {
-        return $this->client->getSerializer()->deserialize($object, 'DanielBadura\Redmine\Api\Struct\User', 'json');
+        // Need a better solution
+        $json = json_decode($json, true);
+        $json = json_encode($json['user']);
+
+        return $this->client->getSerializer()->deserialize($json, 'DanielBadura\Redmine\Api\Struct\User', 'json');
     }
 }
