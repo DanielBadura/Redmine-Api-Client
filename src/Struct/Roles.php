@@ -7,7 +7,17 @@ namespace DanielBadura\Redmine\Api\Struct;
  */
 class Roles
 {
+    /**
+     * @var int
+     *
+     * @JMS\Type("integer")
+     */
     public $id;
 
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
     public $name;
 }

@@ -33,7 +33,7 @@ class UserRepository implements RepositoryInterface
         $result = $this->client->get('users/' . $id . '.json');
 
         $result = json_decode($result, true); //@TODO Make an UserResult Struct, so I don't need to hack this with json decode
-        $result = json_encode($result['users']); //@TODO and json encode, this is not nice
+        $result = json_encode($result['user']); //@TODO and json encode, this is not nice
 
         return $this->deserialize($result);
     }

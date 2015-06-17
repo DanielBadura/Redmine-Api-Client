@@ -45,14 +45,14 @@ class User
     public $mail;
 
     /**
-     * @var string
+     * @var DanielBadura\Redmine\Api\Struct\Membership
      *
      * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Membership>")
      */
     public $memberships;
 
     /**
-     * @var string
+     * @var DanielBadura\Redmine\Api\Struct\Group
      *
      * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Group>")
      */
