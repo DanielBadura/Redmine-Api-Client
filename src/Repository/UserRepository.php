@@ -39,7 +39,7 @@ class UserRepository implements RepositoryInterface
         if(! $result) {
             throw new RedmineApiException('Could not find the User');
         }
-        dump($result);
+        
         return $this->deserialize($result);
     }
 
