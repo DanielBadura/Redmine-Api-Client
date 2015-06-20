@@ -65,14 +65,15 @@ class UserRepository implements RepositoryInterface
      */
     public function save(User $user)
     {
-        $jsonUser = $this->serialize($user);
+        // Need a better solution
+        $jsonUser = $this->serialize(['user' => $user]);
 
         $options = ['body' => $jsonUser];
 
-        if($this->find($user->id)) {
+        if($user->id != null && $this->find($user->id)) {
             $result = $this->client->put('user/' . $user->id . '.json', $options);
         } else {
-            $result = $this->client->post('user.json', $options);
+            $result = $this->client->post('users.json', $options);
         }
 
         if($result) {
@@ -113,7 +114,7 @@ class UserRepository implements RepositoryInterface
      */
     public function serialize($json)
     {
-        return $this->client->getSerializer()->serialize($json, 'DanielBadura\Redmine\Api\Struct\User', 'json');
+        return $this->client->getSerializer()->serialize($json, 'json');
     }
 
     /**

@@ -6,7 +6,6 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @author Marco Giesen <marco.giesen93@gmail.com>
- *
  */
 class User 
 {
@@ -51,6 +50,13 @@ class User
      * @JMS\Type("string")
      */
     public $password;
+
+    /**
+     * @var int
+     *
+     * @JMS\Type("integer")
+     */
+    public $auth_source_id;
 
     /**
      * @var DanielBadura\Redmine\Api\Struct\Membership
