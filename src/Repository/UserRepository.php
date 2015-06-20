@@ -71,7 +71,7 @@ class UserRepository implements RepositoryInterface
         $options = ['body' => $jsonUser];
 
         if($user->id != null && $this->find($user->id)) {
-            $result = $this->client->put('user/' . $user->id . '.json', $options);
+            $result = $this->client->put('users/' . $user->id . '.json', $options);
         } else {
             $result = $this->client->post('users.json', $options);
         }
