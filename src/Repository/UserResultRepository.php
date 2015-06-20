@@ -33,7 +33,7 @@ class UserResultRepository implements ResultRepositoryInterface
         $result = $this->client->get('users.json');
 
         if (! $result) {
-            throw new RedmineApiException('Could not find any issues.');
+            throw new RedmineApiException('Could not find any users.');
         }
 
         return $this->deserialize($result);
