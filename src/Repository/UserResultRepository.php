@@ -32,7 +32,7 @@ class UserResultRepository implements ResultRepositoryInterface
     {
         $result = $this->client->get('users.json');
 
-        if (! $result) {
+        if(! $result) {
             throw new RedmineApiException('Could not find any users.');
         }
 

@@ -2,10 +2,10 @@
 
 namespace DanielBadura\Redmine\Api\Repository;
 
-use DanielBadura\Redmine\Api\Struct\User;
-use DanielBadura\Redmine\Api\Exception\RedmineApiException;
-use DanielBadura\Redmine\Api\Struct\UserResult;
 use DanielBadura\Redmine\Api\Client;
+use DanielBadura\Redmine\Api\Exception\RedmineApiException;
+use DanielBadura\Redmine\Api\Struct\User;
+use DanielBadura\Redmine\Api\Struct\UserResult;
 
 /**
  * @author Marco Giesen <marco.giesen93@gmail.com>
@@ -39,7 +39,7 @@ class UserRepository implements RepositoryInterface
         if(! $result) {
             throw new RedmineApiException('Could not find the User');
         }
-        
+
         return $this->deserialize($result);
     }
 

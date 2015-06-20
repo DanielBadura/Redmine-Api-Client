@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @author Marco Giesen <marco.giesen93@gmail.com>
  */
-class User 
+class User
 {
     /**
      * @var int
@@ -71,4 +71,4 @@ class User
      * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Group>")
      */
     public $groups;
-} 
+}

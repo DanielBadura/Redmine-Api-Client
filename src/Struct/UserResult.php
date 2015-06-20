@@ -37,4 +37,4 @@ class UserResult
      * @JMS\Type("integer")
      */
     public $limit;
-} 
+}
