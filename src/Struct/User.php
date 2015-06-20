@@ -5,9 +5,9 @@ namespace DanielBadura\Redmine\Api\Struct;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * @author Daniel Badura <d.m.badura@googlemail.com>
+ * @author Marco Giesen <marco.giesen93@gmail.com>
  */
-class User 
+class User
 {
     /**
      * @var int
@@ -21,7 +21,7 @@ class User
      *
      * @JMS\Type("string")
      */
-    public $name;
+    public $login;
 
     /**
      * @var string
@@ -36,4 +36,39 @@ class User
      * @JMS\Type("string")
      */
     public $lastname;
-} 
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $mail;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $password;
+
+    /**
+     * @var int
+     *
+     * @JMS\Type("integer")
+     */
+    public $auth_source_id;
+
+    /**
+     * @var DanielBadura\Redmine\Api\Struct\Membership
+     *
+     * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Membership>")
+     */
+    public $memberships;
+
+    /**
+     * @var DanielBadura\Redmine\Api\Struct\Group
+     *
+     * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Group>")
+     */
+    public $groups;
+}
