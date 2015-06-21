@@ -80,7 +80,7 @@ class Client
      */
     public function post($path, array $options = [])
     {
-        return $this->post($path, $options);
+        return $this->adapter->post($path, $options);
     }
 
     /**
