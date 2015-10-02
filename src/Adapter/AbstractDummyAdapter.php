@@ -29,19 +29,8 @@ abstract class AbstractDummyAdapter implements AdapterInterface
      */
     protected function getFilePath($method, $path, array $options = [])
     {
-        $key = $this->createKey($method, $path, $options);
+        $key = md5($method . $path . serialize($options));
 
-        return $this->dir . '/' . $key . '.json';
-    }
-
-    /**
-     * @param string $method
-     * @param string $path
-     * @param array $options
-     * @return string
-     */
-    protected function createKey($method, $path, array $options = [])
-    {
-        return md5($method . $path . serialize($options));
+        return sprintf('%s/%s_%s.json', $this->dir, $method, $key);
     }
 }
