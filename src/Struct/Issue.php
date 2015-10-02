@@ -15,7 +15,7 @@ class Issue
      * @JMS\Type("integer")
      */
     public $id;
-    
+
     /**
      * @var User
      *
@@ -112,7 +112,7 @@ class Issue
      *
      * @JMS\Type("array<DanielBadura\Redmine\Api\Struct\CustomField>")
      */
-    public $customsFields;
+    public $customFields;
 
     /**
      * @var Journal[]
@@ -120,4 +120,4 @@ class Issue
      * @JMS\Type("array<DanielBadura\Redmine\Api\Struct\Journal>")
      */
     public $journals;
-} 
+}

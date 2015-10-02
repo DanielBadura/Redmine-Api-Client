@@ -1,13 +1,13 @@
 <?php
 
-namespace Struct;
+namespace DanielBadura\Redmine\Api\Struct;
 
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class CustomField 
+class CustomField
 {
     /**
      * @var int
@@ -36,4 +36,4 @@ class CustomField
      * @JMS\Type("bool")
      */
     public $multiple;
-} 
+}
