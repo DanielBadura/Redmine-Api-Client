@@ -2,7 +2,6 @@
 
 namespace DanielBadura\Redmine\Api\Repository;
 
-use DanielBadura\Redmine\Api\Client;
 use DanielBadura\Redmine\Api\Exception\ClientException;
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 use DanielBadura\Redmine\Api\Exception\RepositoryException;
@@ -11,21 +10,8 @@ use DanielBadura\Redmine\Api\Struct\Project;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class ProjectRepository implements RepositoryInterface
+class ProjectRepository extends AbstractRepository
 {
-    /**
-     * @var Client
-     */
-    private $client;
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     /**
      * @param $id
      *
@@ -42,19 +28,25 @@ class ProjectRepository implements RepositoryInterface
 
         $result = $this->client->get('/projects/' . $id . '.json');
 
-        return $this->deserialize($result);
+        $result = json_decode($result, true);
+        $result = json_encode($result['project']);
+
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Project');
     }
 
     /**
      * @return Project[]
+     * @throws RedmineApiException
      */
     public function findAll()
     {
-        $projectResultReposiotry = new ProjectResultRepository($this->client);
+        $result = $this->client->get('projects.json');
 
-        $projectResult = $projectResultReposiotry->find();
+        if (!$result) {
+            throw new RedmineApiException('Could not find any Projects..');
+        }
 
-        return $projectResult->projects;
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\ProjectResult')->projects;
     }
 
     /**
@@ -105,29 +97,5 @@ class ProjectRepository implements RepositoryInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param $json
-     *
-     * @return Project|Project[]
-     */
-    public function deserialize($json)
-    {
-        // Need a better solution
-        $json = json_decode($json, true);
-        $json = json_encode($json['project']);
-
-        return $this->client->getSerializer()->deserialize($json, 'DanielBadura\Redmine\Api\Struct\Project', 'json');
-    }
-
-    /**
-     * @param $object
-     *
-     * @return string
-     */
-    public function serialize($object)
-    {
-        return $this->client->getSerializer()->serialize($object, 'json');
     }
 }

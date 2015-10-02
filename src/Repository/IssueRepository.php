@@ -2,7 +2,6 @@
 
 namespace DanielBadura\Redmine\Api\Repository;
 
-use DanielBadura\Redmine\Api\Client;
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 use DanielBadura\Redmine\Api\Struct\Issue;
 use DanielBadura\Redmine\Api\Struct\User;
@@ -10,21 +9,8 @@ use DanielBadura\Redmine\Api\Struct\User;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class IssueRepository implements RepositoryInterface
+class IssueRepository extends AbstractRepository
 {
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     /**
      * @param int $id
      *
@@ -43,7 +29,7 @@ class IssueRepository implements RepositoryInterface
         $result = json_decode($result, true);
         $result = json_encode($result['issue']);
 
-        return $this->deserialize($result);
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
     }
 
     /**
@@ -53,11 +39,13 @@ class IssueRepository implements RepositoryInterface
      */
     public function findAll()
     {
-        $issueResultReposiotry = new IssueResultRepository($this->client);
+        $result = $this->client->get('issues.json');
 
-        $issueResult = $issueResultReposiotry->find();
+        if (! $result) {
+            throw new RedmineApiException('Could not find any issues.');
+        }
 
-        return $issueResult->issues;
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
     }
 
     /**
@@ -173,25 +161,5 @@ class IssueRepository implements RepositoryInterface
         }
 
         return true;
-    }
-
-    /**
-     * @param $json
-     *
-     * @return Issue|Issue[]
-     */
-    public function deserialize($json)
-    {
-        return $this->client->getSerializer()->deserialize($json, 'DanielBadura\Redmine\Api\Struct\Issue', 'json');
-    }
-
-    /**
-     * @param $object
-     *
-     * @return string
-     */
-    public function serialize($object)
-    {
-        return $this->client->getSerializer()->serialize($object, 'json');
     }
 }
