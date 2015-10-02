@@ -26,7 +26,7 @@ class IssueRepository implements RepositoryInterface
     }
 
     /**
-     * @param $id
+     * @param int $id
      *
      * @throws RedmineApiException
      *
@@ -39,6 +39,9 @@ class IssueRepository implements RepositoryInterface
         if (! $result) {
             throw new RedmineApiException('Could not find the Issue');
         }
+
+        $result = json_decode($result, true);
+        $result = json_encode($result['issue']);
 
         return $this->deserialize($result);
     }
