@@ -114,10 +114,21 @@ class Client
     }
 
     /**
-     * @return Serializer
+     * @param object $object
+     * @return string
      */
-    public function getSerializer()
+    public function serialize($object)
     {
-        return $this->serializer;
+        return $this->serializer->serialize($object, 'json');
+    }
+
+    /**
+     * @param string $json
+     * @param string $type
+     * @return object
+     */
+    public function deserialize($json, $type)
+    {
+        return $this->serializer->deserialize($json, $type, 'json');
     }
 }
