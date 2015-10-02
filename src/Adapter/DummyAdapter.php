@@ -5,24 +5,8 @@ namespace DanielBadura\Redmine\Api\Adapter;
 /**
  * @author David Badura <d.a.badura@gmail.com>
  */
-class DummyRecordAdapter extends AbstractDummyAdapter
+class DummyAdapter extends AbstractDummyAdapter
 {
-    /**
-     * @var AdapterInterface
-     */
-    protected $adapter;
-
-    /**
-     * @param string $dir
-     * @param AdapterInterface $adapter
-     */
-    public function __construct($dir, AdapterInterface $adapter)
-    {
-        parent::__construct($dir);
-
-        $this->adapter = $adapter;
-    }
-
     /**
      * @param string $path
      * @param array $options
@@ -31,7 +15,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      */
     public function get($path, array $options = [])
     {
-        return $this->record('get', $path, $options);
+        return $this->read('get', $path, $options);
     }
 
     /**
@@ -41,7 +25,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      */
     public function post($path, array $options = [])
     {
-        return $this->record('post', $path, $options);
+        return $this->read('post', $path, $options);
     }
 
     /**
@@ -51,7 +35,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      */
     public function put($path, array $options = [])
     {
-        return $this->record('put', $path, $options);
+        return $this->read('put', $path, $options);
     }
 
     /**
@@ -61,7 +45,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      */
     public function delete($path, array $options = [])
     {
-        return $this->record('delete', $path, $options);
+        return $this->read('delete', $path, $options);
     }
 
     /**
@@ -71,7 +55,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      */
     public function patch($path, array $options = [])
     {
-        return $this->record('patch', $path, $options);
+        return $this->read('patch', $path, $options);
     }
 
     /**
@@ -80,11 +64,8 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      * @param array $options
      * @return string
      */
-    private function record($method, $path, array $options = [])
+    private function read($method, $path, array $options = [])
     {
-        $result = $this->$method($path, $options);
-        file_put_contents($this->getFilePath($method, $path, $options), $result);
-
-        return $result;
+        return file_get_contents($this->getFilePath($method, $path, $options));
     }
 }
