@@ -82,7 +82,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
      */
     private function record($method, $path, array $options = [])
     {
-        $result = $this->$method($path, $options);
+        $result = $this->adapter->$method($path, $options);
         file_put_contents($this->getFilePath($method, $path, $options), $result);
 
         return $result;
