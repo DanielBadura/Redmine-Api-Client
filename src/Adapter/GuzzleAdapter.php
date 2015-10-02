@@ -6,10 +6,7 @@ use DanielBadura\Redmine\Api\Exception\ClientException;
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
 use GuzzleHttp\Client as Guzzle;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Message\FutureResponse;
 use GuzzleHttp\Message\Response;
-use GuzzleHttp\Message\ResponseInterface;
-
 
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
@@ -28,24 +25,16 @@ class GuzzleAdapter implements AdapterInterface
     protected $options;
 
     /**
-     * @param      $url
-     * @param null $apiKey
-     * @param null $username
-     * @param null $password
+     * @param string $url
+     * @param string $identifier username or api-token
+     * @param string $password
      */
-    public function __construct($url, $apiKey = null, $username = null, $password = null)
+    public function __construct($url, $identifier, $password = null)
     {
-        $this->guzzle = new Guzzle(
-            [
-                'base_url' => $url
-            ]
-        );
+        $this->guzzle = new Guzzle(['base_url' => $url]);
 
         $this->options = [
-            'auth'    => [
-                $apiKey ?: $username,
-                $password
-            ],
+            'auth'    => [$identifier, $password],
             'headers' => [
                 'Content-Type' => 'application/json'
             ]
@@ -53,7 +42,7 @@ class GuzzleAdapter implements AdapterInterface
     }
 
     /**
-     * @param       $path
+     * @param string $path
      * @param array $options
      *
      * @throws ClientException
@@ -63,11 +52,11 @@ class GuzzleAdapter implements AdapterInterface
      */
     public function get($path, array $options = [])
     {
-        $this->mergeOptions($options);
+        $options = array_merge($this->options, $options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->get($path, $this->options);
+            $result = $this->guzzle->get($path, $options);
         } catch (RequestException $requestException) {
             if ($requestException->getCode() == 404) {
                 throw new ClientException('Got HTTP Status Code 404, not Found.', 0, $requestException);
@@ -92,20 +81,20 @@ class GuzzleAdapter implements AdapterInterface
     }
 
     /**
-     * @param       $path
+     * @param string $path
      * @param array $options
      *
      * @throws ClientException
      *
-     * @return ResponseInterface|FutureResponse
+     * @return string
      */
     public function post($path, array $options = [])
     {
-        $this->mergeOptions($options);
+        $options = array_merge($this->options, $options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->post($path, $this->options);
+            $result = $this->guzzle->post($path, $options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not create.', 0, $requestException);
         }
@@ -114,20 +103,20 @@ class GuzzleAdapter implements AdapterInterface
     }
 
     /**
-     * @param       $path
+     * @param string $path
      * @param array $options
      *
      * @throws ClientException
      *
-     * @return ResponseInterface|FutureResponse
+     * @return string
      */
     public function put($path, array $options = [])
     {
-        $this->mergeOptions($options);
+        $options = array_merge($this->options, $options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->put($path, $this->options);
+            $result = $this->guzzle->put($path, $options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not update.', 0, $requestException);
         }
@@ -136,20 +125,20 @@ class GuzzleAdapter implements AdapterInterface
     }
 
     /**
-     * @param       $path
+     * @param string $path
      * @param array $options
      *
      * @throws ClientException
      *
-     * @return ResponseInterface|FutureResponse
+     * @return string
      */
     public function delete($path, array $options = [])
     {
-        $this->mergeOptions($options);
+        $options = array_merge($this->options, $options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->delete($path, $this->options);
+            $result = $this->guzzle->delete($path, $options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not delete.', 0, $requestException);
         }
@@ -158,20 +147,20 @@ class GuzzleAdapter implements AdapterInterface
     }
 
     /**
-     * @param       $path
+     * @param string $path
      * @param array $options
      *
      * @throws ClientException
      *
-     * @return ResponseInterface|FutureResponse
+     * @return string
      */
     public function patch($path, array $options = [])
     {
-        $this->mergeOptions($options);
+        $options = array_merge($this->options, $options);
 
         try {
             /** @var Response $result */
-            $result = $this->guzzle->patch($path, $this->options);
+            $result = $this->guzzle->patch($path, $options);
         } catch (RequestException $requestException) {
             throw new ClientException('Could not update.', 0, $requestException);
         }
@@ -181,14 +170,10 @@ class GuzzleAdapter implements AdapterInterface
 
     /**
      * @param array $options
-     *
-     * @return $this
      */
     public function setOptions(array $options = [])
     {
         $this->options = $options;
-
-        return $this;
     }
 
     /**
@@ -197,13 +182,5 @@ class GuzzleAdapter implements AdapterInterface
     public function getOptions()
     {
         return $this->options;
-    }
-
-    /**
-     * @param array $options
-     */
-    protected function mergeOptions(array $options)
-    {
-        $this->options = array_merge($this->options, $options);
     }
 }
