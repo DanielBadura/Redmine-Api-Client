@@ -20,7 +20,7 @@ class IssueRepository extends AbstractRepository
      */
     public function find($id)
     {
-        $result = $this->client->get('issues/' . $id . '.json');
+        $result = $this->client->get('issues/' . $id . '.json?include=children,attachments,relations,changesets,watchers');
 
         if (! $result) {
             throw new RedmineApiException('Could not find the Issue');
@@ -39,7 +39,7 @@ class IssueRepository extends AbstractRepository
      */
     public function findAll()
     {
-        $result = $this->client->get('issues.json');
+        $result = $this->client->get('issues.json?include=children,attachments,relations,changesets,watchers');
 
         if (! $result) {
             throw new RedmineApiException('Could not find any issues.');
@@ -61,11 +61,13 @@ class IssueRepository extends AbstractRepository
 
         $options = ['body' => $jsonIssue];
 
-        if ($issue->id && $this->find($issue->id)) {
+        if ($issue->id) {
             $result = $this->client->put('issues/' . $issue->id . '.json', $options);
         } else {
             $result = $this->client->post('issues.json', $options);
         }
+
+        $issue->notes = null; // remove note
 
         if ($result) {
             return $result;

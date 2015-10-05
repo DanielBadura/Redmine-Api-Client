@@ -120,4 +120,11 @@ class Issue
      * @JMS\Type("array<DanielBadura\Redmine\Api\Struct\Journal>")
      */
     public $journals;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $notes;
 }

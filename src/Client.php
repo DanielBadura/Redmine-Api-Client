@@ -35,6 +35,8 @@ class Client
      */
     public function __construct(AdapterInterface $adapter)
     {
+        \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');
+
         $this->adapter    = $adapter;
         $this->serializer = SerializerBuilder::create()->build();
     }
