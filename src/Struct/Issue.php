@@ -52,6 +52,13 @@ class Issue
     public $priority;
 
     /**
+     * @var Project
+     *
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\Project")
+     */
+    public $project;
+
+    /**
      * @var string
      *
      * @JMS\Type("string")
