@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @author Marco Giesen <marco.giesen93@gmail.com>
  */
-class User
+class Attachment
 {
     /**
      * @var int
@@ -21,54 +21,48 @@ class User
      *
      * @JMS\Type("string")
      */
-    public $login;
-
-    /**
-     * @var string
-     *
-     * @JMS\Type("string")
-     */
-    public $firstname;
-
-    /**
-     * @var string
-     *
-     * @JMS\Type("string")
-     */
-    public $lastname;
-
-    /**
-     * @var string
-     *
-     * @JMS\Type("string")
-     */
-    public $mail;
-
-    /**
-     * @var string
-     *
-     * @JMS\Type("string")
-     */
-    public $password;
+    public $filename;
 
     /**
      * @var int
      *
      * @JMS\Type("integer")
      */
-    public $auth_source_id;
+    public $filesize;
 
     /**
-     * @var Membership
+     * @var string
      *
-     * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Membership>")
+     * @JMS\Type("string")
      */
-    public $memberships;
+    public $contentType;
 
     /**
-     * @var Group
+     * @var string
      *
-     * @JMS\Type("array<string, DanielBadura\Redmine\Api\Struct\Group>")
+     * @JMS\Type("string")
      */
-    public $groups;
+    public $description;
+
+    /**
+     * @var string
+     *
+     * @JMS\Type("string")
+     */
+    public $contentUrl;
+
+    /**
+     * @var User
+     *
+     * @JMS\Type("DanielBadura\Redmine\Api\Struct\User")
+     */
+    public $author;
+
+    /**
+     * @var \DateTime
+     *
+     * @JMS\Type("DateTime<'Y-m-d\TH:i:s.???Z'>")
+     */
+    public $createdOn;
+
 }

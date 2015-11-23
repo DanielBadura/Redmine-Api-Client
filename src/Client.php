@@ -3,6 +3,7 @@
 namespace DanielBadura\Redmine\Api;
 
 use DanielBadura\Redmine\Api\Adapter\AdapterInterface;
+use DanielBadura\Redmine\Api\Repository\AttachmentRepository;
 use DanielBadura\Redmine\Api\Repository\IssueRepository;
 use DanielBadura\Redmine\Api\Repository\ProjectRepository;
 use DanielBadura\Redmine\Api\Repository\UserRepository;
@@ -63,6 +64,14 @@ class Client
     public function getUserRepository()
     {
         return new UserRepository($this);
+    }
+
+    /**
+     * @return AttachmentRepository
+     */
+    public function getAttachmentRepository()
+    {
+        return new AttachmentRepository($this);
     }
 
     /**
