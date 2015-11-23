@@ -61,7 +61,7 @@ class Attachment
     /**
      * @var \DateTime
      *
-     * @JMS\Type("DateTime<'Y-m-d\TH:i:s.???Z'>")
+     * @JMS\Type("DateTime<'Y-m-d\TH:i:sZ'>")
      */
     public $createdOn;
 
