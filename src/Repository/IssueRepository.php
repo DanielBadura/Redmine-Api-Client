@@ -28,8 +28,17 @@ class IssueRepository extends AbstractRepository
 
         $result = json_decode($result, true);
         $result = json_encode($result['issue']);
+        $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
 
-        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
+        $projectRepository = $this->client->getProjectRepository();
+        $lazyLoadingClosure = function ($issue) use ($projectRepository) {
+            $project = $projectRepository->find($issue->project->id);
+
+            return $project;
+        };
+        $issue->setProjectLazyLoaderClosure($lazyLoadingClosure);
+
+        return $issue;
     }
 
     /**
@@ -45,7 +54,19 @@ class IssueRepository extends AbstractRepository
             throw new RedmineApiException('Could not find any issues.');
         }
 
-        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
+        $injectLazyLoading = function($issue){
+            $projectRepository = $this->client->getProjectRepository();
+            $lazyLoadingClosure = function ($issue) use ($projectRepository) {
+                $project = $projectRepository->find($issue->project->id);
+
+                return $project;
+            };
+            $issue->setProjectLazyLoaderClosure($lazyLoadingClosure);
+
+            return $issue;
+        };
+
+        return array_map($injectLazyLoading, $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues);
     }
 
     /**

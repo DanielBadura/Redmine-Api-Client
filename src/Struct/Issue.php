@@ -134,4 +134,20 @@ class Issue
      * @JMS\Type("string")
      */
     public $notes;
+
+    private $projectLazyLoader;
+
+    public function setProjectLazyLoaderClosure($closure){
+        $this->projectLazyLoader = $closure;
+    }
+
+    public function getProject()
+    {
+        if($this->project->identifier == null && $this->projectLazyLoader != null){
+            $lazyLoader = $this->projectLazyLoader;
+            $this->project = $lazyLoader($this);
+        }
+
+        return $this->project;
+    }
 }
