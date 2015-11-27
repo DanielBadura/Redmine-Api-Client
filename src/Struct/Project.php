@@ -7,7 +7,7 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class Project 
+class Project
 {
     /**
      * @var int

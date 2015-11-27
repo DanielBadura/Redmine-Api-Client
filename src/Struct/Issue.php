@@ -56,7 +56,7 @@ class Issue
      *
      * @JMS\Type("DanielBadura\Redmine\Api\Struct\Project")
      */
-    public $project;
+    private $project;
 
     /**
      * @var string
@@ -135,19 +135,13 @@ class Issue
      */
     public $notes;
 
-    private $projectLazyLoader;
-
-    public function setProjectLazyLoaderClosure($closure){
-        $this->projectLazyLoader = $closure;
+    public function setProject(Project $project)
+    {
+        $this->project = $project;
     }
 
     public function getProject()
     {
-        if($this->project->identifier == null && $this->projectLazyLoader != null){
-            $lazyLoader = $this->projectLazyLoader;
-            $this->project = $lazyLoader($this);
-        }
-
         return $this->project;
     }
 }

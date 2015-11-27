@@ -3,6 +3,7 @@
 namespace DanielBadura\Redmine\Api\Repository;
 
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
+use DanielBadura\Redmine\Api\Hydration\IssueProjectHydration;
 use DanielBadura\Redmine\Api\Struct\Issue;
 use DanielBadura\Redmine\Api\Struct\User;
 
@@ -22,7 +23,7 @@ class IssueRepository extends AbstractRepository
     {
         $result = $this->client->get('issues/' . $id . '.json?include=children,attachments,relations,changesets,watchers');
 
-        if (! $result) {
+        if(! $result) {
             throw new RedmineApiException('Could not find the Issue');
         }
 
@@ -30,13 +31,8 @@ class IssueRepository extends AbstractRepository
         $result = json_encode($result['issue']);
         $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
 
-        $projectRepository = $this->client->getProjectRepository();
-        $lazyLoadingClosure = function ($issue) use ($projectRepository) {
-            $project = $projectRepository->find($issue->project->id);
-
-            return $project;
-        };
-        $issue->setProjectLazyLoaderClosure($lazyLoadingClosure);
+        $hydrate = new IssueProjectHydration();
+        $issue = $hydrate->hydrateOneIssue($issue, $this->client);
 
         return $issue;
     }
@@ -50,23 +46,16 @@ class IssueRepository extends AbstractRepository
     {
         $result = $this->client->get('issues.json?include=children,attachments,relations,changesets,watchers');
 
-        if (! $result) {
+        if(! $result) {
             throw new RedmineApiException('Could not find any issues.');
         }
 
-        $injectLazyLoading = function($issue){
-            $projectRepository = $this->client->getProjectRepository();
-            $lazyLoadingClosure = function ($issue) use ($projectRepository) {
-                $project = $projectRepository->find($issue->project->id);
+        $issues = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
 
-                return $project;
-            };
-            $issue->setProjectLazyLoaderClosure($lazyLoadingClosure);
+        $hydrate = new IssueProjectHydration();
+        $issues = $hydrate->hydrateManyIssues($issues, $this->client);
 
-            return $issue;
-        };
-
-        return array_map($injectLazyLoading, $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues);
+        return $issues;
     }
 
     /**
@@ -82,7 +71,7 @@ class IssueRepository extends AbstractRepository
 
         $options = ['body' => $jsonIssue];
 
-        if ($issue->id) {
+        if($issue->id) {
             $result = $this->client->put('issues/' . $issue->id . '.json', $options);
         } else {
             $result = $this->client->post('issues.json', $options);
@@ -90,7 +79,7 @@ class IssueRepository extends AbstractRepository
 
         $issue->notes = null; // remove note
 
-        if ($result) {
+        if($result) {
             return $result;
         }
 
@@ -106,7 +95,7 @@ class IssueRepository extends AbstractRepository
      */
     public function delete(Issue $issue)
     {
-        if (! $this->find($issue->id)) {
+        if(! $this->find($issue->id)) {
             return false;
         }
 
@@ -114,7 +103,7 @@ class IssueRepository extends AbstractRepository
 
         $result = $this->client->delete('issues/' . $issue->id . '.json', $options);
 
-        if (! $result) {
+        if(! $result) {
             throw new RedmineApiException('Could not delete the Issue.');
         }
 
@@ -123,13 +112,13 @@ class IssueRepository extends AbstractRepository
 
     /**
      * @param Issue $issue
-     * @param User  $user
+     * @param User $user
      *
      * @return bool
      */
     public function addWatcher(Issue $issue, User $user)
     {
-        if (! $this->find($issue->id)) {
+        if(! $this->find($issue->id)) {
             return false;
         }
 
@@ -151,7 +140,7 @@ class IssueRepository extends AbstractRepository
 
         $result = $this->client->post('/issues/' . $issue->id . '/watchers.json', $options);
 
-        if (! $result) {
+        if(! $result) {
             return false;
         }
 
@@ -160,13 +149,13 @@ class IssueRepository extends AbstractRepository
 
     /**
      * @param Issue $issue
-     * @param User  $user
+     * @param User $user
      *
      * @return bool
      */
     public function deleteWatcher(Issue $issue, User $user)
     {
-        if (! $this->find($issue->id)) {
+        if(! $this->find($issue->id)) {
             return false;
         }
 
@@ -178,7 +167,7 @@ class IssueRepository extends AbstractRepository
 
         $result = $this->client->delete('/issues/' . $issue->id . '/watchers/' . $user->id . '.json');
 
-        if (! $result) {
+        if(! $result) {
             return false;
         }
 
