@@ -31,7 +31,6 @@ class IssueProjectHydration
         ) use ($project, $pR, $issue) {
             $wrappedObject = $issue;
             if('getProject' == $method) {
-                $wrappedObject = $issue;
                 $wrappedObject->setProject($pR->find($project->id));
 
                 $proxy->setProxyInitializer(null);
