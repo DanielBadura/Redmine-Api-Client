@@ -4,7 +4,6 @@ namespace DanielBadura\Redmine\Api\Hydration;
 
 use DanielBadura\Redmine\Api\Client;
 use DanielBadura\Redmine\Api\Struct\Issue;
-use DanielBadura\Redmine\Api\Struct\Project;
 use ProxyManager\Factory\LazyLoadingValueHolderFactory;
 use ProxyManager\Proxy\LazyLoadingInterface;
 
@@ -21,25 +20,34 @@ class IssueProjectHydration
     public function hydrateOneIssue(Issue $issue, Client $client)
     {
         $project = $issue->getProject();
-        $pR = $client->getProjectRepository();
+        $projectRepository = $client->getProjectRepository();
 
         $factory = new LazyLoadingValueHolderFactory();
         $initializer = function (
             &$wrappedObject,
             LazyLoadingInterface $proxy,
             $method
-        ) use ($project, $pR, $issue) {
-            $wrappedObject = $issue;
-            if('getProject' == $method) {
-                $wrappedObject->setProject($pR->find($project->id));
-
-                $proxy->setProxyInitializer(null);
+        ) use ($project, $projectRepository) {
+            if($method == "getIdentifier" ||
+                $method == "getDescription" ||
+                $method == "getCreatedOn" ||
+                $method == "getUpdatedOn" ||
+                $method == "isIsPublic" ||
+                $method == "getParentId" ||
+                $method == "isInheritMembers" ||
+                $method == "getHomepage"
+            ) {
+                if(! $wrappedObject) {
+                    $wrappedObject = $projectRepository->find($project->getId());
+                    $proxy->setProxyInitializer(null);
+                }
+            } else {
+                $wrappedObject = $project;
             }
 
             return true;
         };
-        //$issue->setProject($factory->createProxy('DanielBadura\Redmine\Api\Struct\Project', $initializer));
-        $issue = $factory->createProxy('DanielBadura\Redmine\Api\Struct\Issue', $initializer);
+        $issue->project = $factory->createProxy('DanielBadura\Redmine\Api\Struct\Project', $initializer);
 
         return $issue;
     }
