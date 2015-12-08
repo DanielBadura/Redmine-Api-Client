@@ -17,7 +17,7 @@ class IssueProjectHydration
      * @param Client $client
      * @return Issue
      */
-    public function hydrateOneIssue(Issue $issue, Client $client)
+    public function hydrateIssue(Issue $issue, Client $client)
     {
         $project = $issue->getProject();
         $projectRepository = $client->getProjectRepository();
@@ -62,7 +62,7 @@ class IssueProjectHydration
         $tempIssues = [];
 
         foreach ($issues as $issue) {
-            $tempIssues[] = $this->hydrateOneIssue($issue, $client);
+            $tempIssues[] = $this->hydrateIssue($issue, $client);
         }
 
         return $tempIssues;

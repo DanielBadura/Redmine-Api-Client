@@ -32,7 +32,7 @@ class IssueRepository extends AbstractRepository
         $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
 
         $hydrate = new IssueProjectHydration();
-        $issue = $hydrate->hydrateOneIssue($issue, $this->client);
+        $issue = $hydrate->hydrateIssue($issue, $this->client);
 
         return $issue;
     }
