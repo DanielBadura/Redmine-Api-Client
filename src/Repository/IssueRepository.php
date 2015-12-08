@@ -112,9 +112,9 @@ class IssueRepository extends AbstractRepository
             return false;
         }
 
-        $userResult = $this->client->get('/user/' . $user->id . '.json', []);   //@TODO Maybe use later the UserRepository for this
+        $userRepository = $this->client->getUserRepository();
 
-        if (! $userResult) {
+        if (! $userRepository->find($user->id)) {
             return false;
         }
 
@@ -123,7 +123,6 @@ class IssueRepository extends AbstractRepository
         ];
 
         $body = json_encode($body); // Don't know if serialiazation would be overkill or if this right now does just fine
-
 
         $options = [
             'body' => $body
@@ -150,9 +149,9 @@ class IssueRepository extends AbstractRepository
             return false;
         }
 
-        $userResult = $this->client->get('/user/' . $user->id . '.json', []);
+        $userRepository = $this->client->getUserRepository();
 
-        if (! $userResult) {
+        if (! $userRepository->find($user->id)) {
             return false;
         }
 
