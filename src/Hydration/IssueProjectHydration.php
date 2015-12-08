@@ -32,7 +32,7 @@ class IssueProjectHydration
                 $method == "getDescription" ||
                 $method == "getCreatedOn" ||
                 $method == "getUpdatedOn" ||
-                $method == "isIsPublic" ||
+                $method == "isPublic" ||
                 $method == "getParentId" ||
                 $method == "isInheritMembers" ||
                 $method == "getHomepage"
