@@ -28,21 +28,14 @@ class IssueProjectHydration
             LazyLoadingInterface $proxy,
             $method
         ) use ($project, $projectRepository) {
-            if($method == "getIdentifier" ||
-                $method == "getDescription" ||
-                $method == "getCreatedOn" ||
-                $method == "getUpdatedOn" ||
-                $method == "isPublic" ||
-                $method == "getParentId" ||
-                $method == "isInheritMembers" ||
-                $method == "getHomepage"
-            ) {
+            if ($method == 'getId' ||
+                $method == 'getName') {
+                $wrappedObject = $project;
+            } else {
                 if(! $wrappedObject) {
                     $wrappedObject = $projectRepository->find($project->getId());
                     $proxy->setProxyInitializer(null);
                 }
-            } else {
-                $wrappedObject = $project;
             }
 
             return true;

@@ -23,7 +23,7 @@ class IssueRepository extends AbstractRepository
     {
         $result = $this->client->get('issues/' . $id . '.json?include=children,attachments,relations,changesets,watchers');
 
-        if(! $result) {
+        if (! $result) {
             throw new RedmineApiException('Could not find the Issue');
         }
 
@@ -46,7 +46,7 @@ class IssueRepository extends AbstractRepository
     {
         $result = $this->client->get('issues.json?include=children,attachments,relations,changesets,watchers');
 
-        if(! $result) {
+        if (! $result) {
             throw new RedmineApiException('Could not find any issues.');
         }
 
@@ -71,7 +71,7 @@ class IssueRepository extends AbstractRepository
 
         $options = ['body' => $jsonIssue];
 
-        if($issue->id) {
+        if ($issue->id) {
             $result = $this->client->put('issues/' . $issue->id . '.json', $options);
         } else {
             $result = $this->client->post('issues.json', $options);
@@ -79,7 +79,7 @@ class IssueRepository extends AbstractRepository
 
         $issue->notes = null; // remove note
 
-        if($result) {
+        if ($result) {
             return $result;
         }
 
@@ -95,7 +95,7 @@ class IssueRepository extends AbstractRepository
      */
     public function delete(Issue $issue)
     {
-        if(! $this->find($issue->id)) {
+        if (! $this->find($issue->id)) {
             return false;
         }
 
@@ -103,7 +103,7 @@ class IssueRepository extends AbstractRepository
 
         $result = $this->client->delete('issues/' . $issue->id . '.json', $options);
 
-        if(! $result) {
+        if (! $result) {
             throw new RedmineApiException('Could not delete the Issue.');
         }
 
@@ -118,7 +118,7 @@ class IssueRepository extends AbstractRepository
      */
     public function addWatcher(Issue $issue, User $user)
     {
-        if(! $this->find($issue->id)) {
+        if (! $this->find($issue->id)) {
             return false;
         }
 
@@ -140,7 +140,7 @@ class IssueRepository extends AbstractRepository
 
         $result = $this->client->post('/issues/' . $issue->id . '/watchers.json', $options);
 
-        if(! $result) {
+        if (! $result) {
             return false;
         }
 
@@ -155,7 +155,7 @@ class IssueRepository extends AbstractRepository
      */
     public function deleteWatcher(Issue $issue, User $user)
     {
-        if(! $this->find($issue->id)) {
+        if (! $this->find($issue->id)) {
             return false;
         }
 
@@ -167,7 +167,7 @@ class IssueRepository extends AbstractRepository
 
         $result = $this->client->delete('/issues/' . $issue->id . '/watchers/' . $user->id . '.json');
 
-        if(! $result) {
+        if (! $result) {
             return false;
         }
 
