@@ -9,6 +9,7 @@ use DanielBadura\Redmine\Api\Repository\ProjectRepository;
 use DanielBadura\Redmine\Api\Repository\UserRepository;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
@@ -36,7 +37,7 @@ class Client
      */
     public function __construct(AdapterInterface $adapter)
     {
-        \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');
+        AnnotationRegistry::registerLoader('class_exists');
 
         $this->adapter    = $adapter;
         $this->serializer = SerializerBuilder::create()->build();
@@ -76,7 +77,8 @@ class Client
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function get($path, array $options = [])
@@ -86,7 +88,8 @@ class Client
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function post($path, array $options = [])
@@ -96,7 +99,8 @@ class Client
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function put($path, array $options = [])
@@ -106,7 +110,8 @@ class Client
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function delete($path, array $options = [])
@@ -116,7 +121,8 @@ class Client
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function patch($path, array $options = [])
@@ -126,6 +132,7 @@ class Client
 
     /**
      * @param object $object
+     *
      * @return string
      */
     public function serialize($object)
@@ -136,6 +143,7 @@ class Client
     /**
      * @param string $json
      * @param string $type
+     *
      * @return object
      */
     public function deserialize($json, $type)

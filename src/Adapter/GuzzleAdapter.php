@@ -34,7 +34,7 @@ class GuzzleAdapter implements AdapterInterface
         $this->guzzle = new Guzzle(['base_url' => $url]);
 
         $this->options = [
-            'auth'    => [$identifier, $password],
+            'auth' => [$identifier, $password],
             'headers' => [
                 'Content-Type' => 'application/json'
             ]
@@ -43,7 +43,7 @@ class GuzzleAdapter implements AdapterInterface
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @throws ClientException
      * @throws RedmineApiException
@@ -82,7 +82,7 @@ class GuzzleAdapter implements AdapterInterface
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @throws ClientException
      *
@@ -104,7 +104,7 @@ class GuzzleAdapter implements AdapterInterface
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @throws ClientException
      *
@@ -126,7 +126,7 @@ class GuzzleAdapter implements AdapterInterface
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @throws ClientException
      *
@@ -148,7 +148,7 @@ class GuzzleAdapter implements AdapterInterface
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @throws ClientException
      *

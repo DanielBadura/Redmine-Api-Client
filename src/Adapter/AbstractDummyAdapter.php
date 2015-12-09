@@ -24,7 +24,8 @@ abstract class AbstractDummyAdapter implements AdapterInterface
     /**
      * @param string $method
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     protected function getFilePath($method, $path, array $options = [])

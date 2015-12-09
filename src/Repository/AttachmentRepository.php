@@ -31,6 +31,8 @@ class AttachmentRepository extends AbstractRepository
         return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Attachment');
     }
 
-    public function findAll(){}
+    public function findAll()
+    {
+    }
 
 }
