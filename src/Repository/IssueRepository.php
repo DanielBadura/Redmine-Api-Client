@@ -29,10 +29,8 @@ class IssueRepository extends AbstractRepository
 
         $result = json_decode($result, true);
         $result = json_encode($result['issue']);
+        dump($result);
         $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
-
-        $hydrate = new IssueProjectHydration();
-        $issue = $hydrate->hydrateIssue($issue, $this->client);
 
         return $issue;
     }
@@ -51,10 +49,10 @@ class IssueRepository extends AbstractRepository
         }
 
         $issues = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
-
+/*
         $hydrate = new IssueProjectHydration();
         $issues = $hydrate->hydrateManyIssues($issues, $this->client);
-
+*/
         return $issues;
     }
 
