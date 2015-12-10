@@ -3,6 +3,7 @@
 namespace DanielBadura\Redmine\Api\Repository;
 
 use DanielBadura\Redmine\Api\Exception\RedmineApiException;
+use DanielBadura\Redmine\Api\Hydration\IssueProjectHydration;
 use DanielBadura\Redmine\Api\Struct\Issue;
 use DanielBadura\Redmine\Api\Struct\User;
 
@@ -28,8 +29,12 @@ class IssueRepository extends AbstractRepository
 
         $result = json_decode($result, true);
         $result = json_encode($result['issue']);
+        $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
 
-        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
+        $hydrate = new IssueProjectHydration();
+        $issue = $hydrate->hydrateIssue($issue, $this->client);
+
+        return $issue;
     }
 
     /**
@@ -45,7 +50,12 @@ class IssueRepository extends AbstractRepository
             throw new RedmineApiException('Could not find any issues.');
         }
 
-        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
+        $issues = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
+
+        $hydrate = new IssueProjectHydration();
+        $issues = $hydrate->hydrateManyIssues($issues, $this->client);
+
+        return $issues;
     }
 
     /**
@@ -102,7 +112,7 @@ class IssueRepository extends AbstractRepository
 
     /**
      * @param Issue $issue
-     * @param User  $user
+     * @param User $user
      *
      * @return bool
      */
@@ -139,7 +149,7 @@ class IssueRepository extends AbstractRepository
 
     /**
      * @param Issue $issue
-     * @param User  $user
+     * @param User $user
      *
      * @return bool
      */

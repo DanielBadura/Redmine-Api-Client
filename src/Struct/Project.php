@@ -7,35 +7,35 @@ use JMS\Serializer\Annotation as JMS;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class Project 
+class Project
 {
     /**
      * @var int
      *
      * @JMS\Type("integer")
      */
-    public $id;
+    private $id;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    public $identifier;
+    private $identifier;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    public $name;
+    private $name;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    public $description;
+    private $description;
 
     /**
      * @var \DateTime
@@ -44,40 +44,200 @@ class Project
      *
      * @JMS\Type("DateTime<'Y-m-d\TH:i:sO'>")
      */
-    public $createdOn;
+    private $createdOn;
 
     /**
      * @var \DateTime
      *Sat Sep 29 12:03:04 +0200 2007
      * @JMS\Type("DateTime<'Y-m-d\TH:i:sO'>")
      */
-    public $updatedOn;
+    private $updatedOn;
 
     /**
      * @var bool
      *
      * @JMS\Type("boolean")
      */
-    public $isPublic;
+    private $isPublic;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    public $homepage;
+    private $homepage;
 
     /**
      * @var Project
      *
      * @JMS\Type("Project")
      */
-    public $parent_id;
+    private $parent_id;
 
     /**
      * @var bool
      *
      * @JMS\Type("boolean")
      */
-    public $inherit_members;
+    private $inherit_members;
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedOn()
+    {
+        return $this->createdOn;
+    }
+
+    /**
+     * @param \DateTime $createdOn
+     */
+    public function setCreatedOn($createdOn)
+    {
+        $this->createdOn = $createdOn;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedOn()
+    {
+        return $this->updatedOn;
+    }
+
+    /**
+     * @param \DateTime $updatedOn
+     */
+    public function setUpdatedOn($updatedOn)
+    {
+        $this->updatedOn = $updatedOn;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPublic()
+    {
+        return $this->isPublic;
+    }
+
+    /**
+     * @param boolean $isPublic
+     */
+    public function setIsPublic($isPublic)
+    {
+        $this->isPublic = $isPublic;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHomepage()
+    {
+        return $this->homepage;
+    }
+
+    /**
+     * @param string $homepage
+     */
+    public function setHomepage($homepage)
+    {
+        $this->homepage = $homepage;
+    }
+
+    /**
+     * @return Project
+     */
+    public function getParentId()
+    {
+        return $this->parent_id;
+    }
+
+    /**
+     * @param Project $parent_id
+     */
+    public function setParentId($parent_id)
+    {
+        $this->parent_id = $parent_id;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isInheritMembers()
+    {
+        return $this->inherit_members;
+    }
+
+    /**
+     * @param boolean $inherit_members
+     */
+    public function setInheritMembers($inherit_members)
+    {
+        $this->inherit_members = $inherit_members;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdentifier()
+    {
+        return $this->identifier;
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier($identifier)
+    {
+        $this->identifier = $identifier;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
 }
