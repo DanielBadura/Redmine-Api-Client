@@ -3,7 +3,7 @@
 namespace DanielBadura\Redmine\Api\Handler;
 
 use DanielBadura\Redmine\Api\Client;
-use DanielBadura\Redmine\Api\Struct\Project;
+use DanielBadura\Redmine\Api\Proxy\Project;
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
@@ -59,16 +59,14 @@ class IssueHandler implements SubscribingHandlerInterface
             LazyLoadingInterface $proxy,
             $method
         ) use ($project, $projectRepository) {
-            if ($method == 'getId' ||
-                $method == 'getName'
-            ) {
-                $wrappedObject = $project;
-            } else {
+            if ($method == 'getId' || $method == 'getName') {
                 if (! $wrappedObject) {
-                    $wrappedObject = $projectRepository->find($project['id']);
-                    $proxy->setProxyInitializer(null);
-                    $this->client->getMapper()->setIdentity('project.' . $wrappedObject->getId(), $wrappedObject);
+                    $wrappedObject = new Project($project['id'], $project['name']);
                 }
+            } else {
+                $wrappedObject = $projectRepository->find($project['id']);
+                $proxy->setProxyInitializer(null);
+                $this->client->getMapper()->setIdentity('project.' . $wrappedObject->getId(), $wrappedObject);
             }
 
             return true;

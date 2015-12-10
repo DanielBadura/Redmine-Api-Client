@@ -54,7 +54,7 @@ class Issue
     /**
      * @var Project
      *
-     * @JMS\Type("DanielBadura\Redmine\Api\Struct\Project")
+     * @JMS\Type("Project")
      */
     public $project;
 
