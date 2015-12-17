@@ -36,11 +36,6 @@ class Client
     protected $serializer;
 
     /**
-     * @var IdentityMapper
-     */
-    protected $mapper;
-
-    /**
      * @param AdapterInterface $adapter
      */
     public function __construct(AdapterInterface $adapter)
@@ -48,7 +43,6 @@ class Client
         AnnotationRegistry::registerLoader('class_exists');
 
         $this->adapter    = $adapter;
-        $this->mapper     = new IdentityMapper();
         $this->serializer = SerializerBuilder::create()
             ->configureHandlers(function (HandlerRegistry $registry) {
                 $registry->registerSubscribingHandler(new IssueHandler($this));

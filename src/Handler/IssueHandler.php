@@ -29,7 +29,7 @@ class IssueHandler implements SubscribingHandlerInterface
     public static function getSubscribingMethods()
     {
         $methods[] = [
-            'type' => 'Project',
+            'type' => 'DanielBadura\Redmine\Api\Struct\Project',
             'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
             'format' => 'json',
             'method' => 'deserializeProject'
@@ -40,10 +40,8 @@ class IssueHandler implements SubscribingHandlerInterface
 
     public function deserializeProject(VisitorInterface $visitor, $project, array $type, Context $context)
     {
-        dump($project);
-
-        if ($this->client->getMapper()->hasIdentity('project.' . $project['id'])) {
-            return $this->client->getMapper()->getIdentity('project.' . $project['id']);
+        if ($this->client->getProjectRepository()->getMapper()->hasIdentity($project['id'])) {
+            return $this->client->getProjectRepository()->getMapper()->getIdentity($project['id']);
         }
 
         return $this->hydrate($project);
@@ -66,15 +64,13 @@ class IssueHandler implements SubscribingHandlerInterface
             } else {
                 $wrappedObject = $projectRepository->find($project['id']);
                 $proxy->setProxyInitializer(null);
-                $this->client->getMapper()->setIdentity('project.' . $wrappedObject->getId(), $wrappedObject);
+                $projectRepository->getMapper()->setIdentity($wrappedObject->getId(), $wrappedObject);
             }
 
             return true;
         };
 
         $project = $factory->createProxy('DanielBadura\Redmine\Api\Struct\Project', $initializer);
-
-        dump($project);
 
         return $project;
     }
