@@ -29,10 +29,8 @@ class IssueRepository extends AbstractRepository
 
         $result = json_decode($result, true);
         $result = json_encode($result['issue']);
-        dump($result);
-        $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
 
-        return $issue;
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
     }
 
     /**

@@ -30,7 +30,6 @@ class ProjectRepository extends AbstractRepository
 
         $result = json_decode($result, true);
         $result = json_encode($result['project']);
-        dump($result);
 
         return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Project');
     }
