@@ -53,6 +53,10 @@ class Client
             ->configureHandlers(function (HandlerRegistry $registry) {
                 $registry->registerSubscribingHandler(new IssueHandler($this));
             })
+            ->addDefaultHandlers()
+            ->addDefaultListeners()
+            ->addDefaultDeserializationVisitors()
+            ->addDefaultSerializationVisitors()
             ->build();
     }
 
