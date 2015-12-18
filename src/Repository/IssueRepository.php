@@ -120,12 +120,12 @@ class IssueRepository extends AbstractRepository
 
         $userRepository = $this->client->getUserRepository();
 
-        if (! $userRepository->find($user->id)) {
+        if (! $userRepository->find($user->getId())) {
             return false;
         }
 
         $body = [
-            'user_id' => $user->id
+            'user_id' => $user->getId()
         ];
 
         $body = json_encode($body); // Don't know if serialiazation would be overkill or if this right now does just fine
@@ -157,11 +157,11 @@ class IssueRepository extends AbstractRepository
 
         $userRepository = $this->client->getUserRepository();
 
-        if (! $userRepository->find($user->id)) {
+        if (! $userRepository->find($user->getId())) {
             return false;
         }
 
-        $result = $this->client->delete('/issues/' . $issue->id . '/watchers/' . $user->id . '.json');
+        $result = $this->client->delete('/issues/' . $issue->id . '/watchers/' . $user->getId() . '.json');
 
         if (! $result) {
             return false;

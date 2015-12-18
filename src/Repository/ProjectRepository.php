@@ -26,7 +26,7 @@ class ProjectRepository extends AbstractRepository
             throw new RepositoryException("Can't find project. No id given!");
         }
 
-        $result = $this->client->get('/projects/' . $id . '.json');
+        $result = $this->client->get('projects/' . $id . '.json');
 
         $result = json_decode($result, true);
         $result = json_encode($result['project']);
