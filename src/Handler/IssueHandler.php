@@ -3,7 +3,9 @@
 namespace DanielBadura\Redmine\Api\Handler;
 
 use DanielBadura\Redmine\Api\Client;
+use DanielBadura\Redmine\Api\Hydration\Hydration;
 use DanielBadura\Redmine\Api\Proxy\Project;
+use DanielBadura\Redmine\Api\Proxy\User;
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
@@ -14,16 +16,16 @@ use ProxyManager\Proxy\LazyLoadingInterface;
 class IssueHandler implements SubscribingHandlerInterface
 {
     /**
-     * @var Client
+     * @var Hydration
      */
-    private $client;
+    private $hydration;
 
     /**
-     * @param Client $client
+     * @param Hydration $hydration
      */
-    public function __construct(Client $client)
+    public function __construct(Hydration $hydration)
     {
-        $this->client = $client;
+        $this->hydration = $hydration;
     }
 
     public static function getSubscribingMethods()
@@ -35,43 +37,23 @@ class IssueHandler implements SubscribingHandlerInterface
             'method' => 'deserializeProject'
         ];
 
+        $methods[] = [
+            'type' => 'DanielBadura\Redmine\Api\Struct\User',
+            'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
+            'format' => 'json',
+            'method' => 'deserializeUser'
+        ];
+
         return $methods;
     }
 
     public function deserializeProject(VisitorInterface $visitor, $project, array $type, Context $context)
     {
-        if ($this->client->getProjectRepository()->getMapper()->hasIdentity($project['id'])) {
-            return $this->client->getProjectRepository()->getMapper()->getIdentity($project['id']);
-        }
-
-        return $this->hydrate($project);
+        return $this->hydration->project($project);
     }
 
-    private function hydrate($project)
+    public function deserializeUser(VisitorInterface $visitor, $user, array $type, Context $context)
     {
-        $projectRepository = $this->client->getProjectRepository();
-        $factory           = new LazyLoadingValueHolderFactory();
-
-        $initializer = function (
-            &$wrappedObject,
-            LazyLoadingInterface $proxy,
-            $method
-        ) use ($project, $projectRepository) {
-            if ($method == 'getId' || $method == 'getName') {
-                if (! $wrappedObject) {
-                    $wrappedObject = new Project($project['id'], $project['name']);
-                }
-            } else {
-                $wrappedObject = $projectRepository->find($project['id']);
-                $proxy->setProxyInitializer(null);
-                $projectRepository->getMapper()->setIdentity($wrappedObject->getId(), $wrappedObject);
-            }
-
-            return true;
-        };
-
-        $project = $factory->createProxy('DanielBadura\Redmine\Api\Struct\Project', $initializer);
-
-        return $project;
+        return $this->hydration->user($user);
     }
 } 
