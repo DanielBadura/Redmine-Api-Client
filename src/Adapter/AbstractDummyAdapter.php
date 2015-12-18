@@ -31,6 +31,10 @@ abstract class AbstractDummyAdapter implements AdapterInterface
     {
         $key = md5($method . $path . serialize($options));
 
+        $tmp = explode('/', $path);
+        $tmp2 = explode('.', $tmp[1]);
+
+        return sprintf('%s/%s_%s_%s.json', $this->dir, $tmp[0], $method, $tmp2[0]);
         return sprintf('%s/%s_%s.json', $this->dir, $method, $key);
     }
 }
