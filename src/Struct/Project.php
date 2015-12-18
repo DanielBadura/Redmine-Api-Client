@@ -14,28 +14,28 @@ class Project
      *
      * @JMS\Type("integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    private $identifier;
+    protected $identifier;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    private $description;
+    protected $description;
 
     /**
      * @var \DateTime
@@ -44,42 +44,42 @@ class Project
      *
      * @JMS\Type("DateTime<'Y-m-d\TH:i:sO'>")
      */
-    private $createdOn;
+    protected $createdOn;
 
     /**
      * @var \DateTime
      *Sat Sep 29 12:03:04 +0200 2007
      * @JMS\Type("DateTime<'Y-m-d\TH:i:sO'>")
      */
-    private $updatedOn;
+    protected $updatedOn;
 
     /**
      * @var bool
      *
      * @JMS\Type("boolean")
      */
-    private $isPublic;
+    protected $isPublic;
 
     /**
      * @var string
      *
      * @JMS\Type("string")
      */
-    private $homepage;
+    protected $homepage;
 
     /**
      * @var Project
      *
      * @JMS\Type("Project")
      */
-    private $parent_id;
+    protected $parent_id;
 
     /**
      * @var bool
      *
      * @JMS\Type("boolean")
      */
-    private $inherit_members;
+    protected $inherit_members;
 
     /**
      * @return string
