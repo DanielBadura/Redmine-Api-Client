@@ -31,14 +31,14 @@ class IssueHandler implements SubscribingHandlerInterface
     public static function getSubscribingMethods()
     {
         $methods[] = [
-            'type' => 'DanielBadura\Redmine\Api\Struct\Project',
+            'type' => 'Project',
             'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
             'format' => 'json',
             'method' => 'deserializeProject'
         ];
 
         $methods[] = [
-            'type' => 'DanielBadura\Redmine\Api\Struct\User',
+            'type' => 'User',
             'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
             'format' => 'json',
             'method' => 'deserializeUser'
@@ -56,4 +56,4 @@ class IssueHandler implements SubscribingHandlerInterface
     {
         return $this->hydration->user($user);
     }
-} 
+}

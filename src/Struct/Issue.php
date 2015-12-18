@@ -19,14 +19,14 @@ class Issue
     /**
      * @var User
      *
-     * @JMS\Type("DanielBadura\Redmine\Api\Struct\User")
+     * @JMS\Type("User")
      */
     public $author;
 
     /**
      * @var User
      *
-     * @JMS\Type("DanielBadura\Redmine\Api\Struct\User")
+     * @JMS\Type("User")
      */
     public $assignedTo;
 
@@ -54,7 +54,7 @@ class Issue
     /**
      * @var Project
      *
-     * @JMS\Type("DanielBadura\Redmine\Api\Struct\Project")
+     * @JMS\Type("Project")
      */
     public $project;
 
