@@ -2,7 +2,7 @@
 
 namespace DanielBadura\Redmine\Api;
 
-class IdentityMapper 
+class IdentityMapper
 {
     /**
      * @var array

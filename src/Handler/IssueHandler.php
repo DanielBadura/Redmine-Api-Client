@@ -2,16 +2,11 @@
 
 namespace DanielBadura\Redmine\Api\Handler;
 
-use DanielBadura\Redmine\Api\Client;
 use DanielBadura\Redmine\Api\Hydration\Hydration;
-use DanielBadura\Redmine\Api\Proxy\Project;
-use DanielBadura\Redmine\Api\Proxy\User;
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\VisitorInterface;
-use ProxyManager\Factory\LazyLoadingValueHolderFactory;
-use ProxyManager\Proxy\LazyLoadingInterface;
 
 class IssueHandler implements SubscribingHandlerInterface
 {

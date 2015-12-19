@@ -42,7 +42,7 @@ class ProjectRepository extends AbstractRepository
     {
         $result = $this->client->get('projects.json');
 
-        if (!$result) {
+        if (! $result) {
             throw new RedmineApiException('Could not find any Projects..');
         }
 

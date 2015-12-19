@@ -14,6 +14,7 @@ class UserRepository extends AbstractRepository
      * Find one entity by Id
      *
      * @param $id
+     *
      * @return User
      * @throws RedmineApiException
      */
@@ -21,7 +22,7 @@ class UserRepository extends AbstractRepository
     {
         $result = $this->client->get('users/' . $id . '.json');
 
-        if (!$result) {
+        if (! $result) {
             throw new RedmineApiException('Could not find the User');
         }
 
@@ -41,7 +42,7 @@ class UserRepository extends AbstractRepository
     {
         $result = $this->client->get('users.json');
 
-        if(! $result) {
+        if (! $result) {
             throw new RedmineApiException('Could not find any users.');
         }
 
@@ -80,7 +81,7 @@ class UserRepository extends AbstractRepository
      */
     public function delete(User $user)
     {
-        if (!$this->find($user->getId())) {
+        if (! $this->find($user->getId())) {
             return false;
         }
 

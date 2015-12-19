@@ -8,5 +8,4 @@ namespace DanielBadura\Redmine\Api\Exception;
  */
 class RepositoryException extends \Exception
 {
-
 } 

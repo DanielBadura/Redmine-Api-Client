@@ -9,7 +9,6 @@ use DanielBadura\Redmine\Api\Repository\AttachmentRepository;
 use DanielBadura\Redmine\Api\Repository\IssueRepository;
 use DanielBadura\Redmine\Api\Repository\ProjectRepository;
 use DanielBadura\Redmine\Api\Repository\UserRepository;
-use DanielBadura\Redmine\Api\Struct\Issue;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use JMS\Serializer\Handler\HandlerRegistry;
 use JMS\Serializer\Serializer;

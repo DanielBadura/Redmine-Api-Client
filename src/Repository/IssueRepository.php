@@ -47,10 +47,12 @@ class IssueRepository extends AbstractRepository
         }
 
         $issues = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
-/*
-        $hydrate = new IssueProjectHydration();
-        $issues = $hydrate->hydrateManyIssues($issues, $this->client);
-*/
+
+        /*
+                $hydrate = new IssueProjectHydration();
+                $issues = $hydrate->hydrateManyIssues($issues, $this->client);
+        */
+
         return $issues;
     }
 
@@ -108,7 +110,7 @@ class IssueRepository extends AbstractRepository
 
     /**
      * @param Issue $issue
-     * @param User $user
+     * @param User  $user
      *
      * @return bool
      */
@@ -145,7 +147,7 @@ class IssueRepository extends AbstractRepository
 
     /**
      * @param Issue $issue
-     * @param User $user
+     * @param User  $user
      *
      * @return bool
      */

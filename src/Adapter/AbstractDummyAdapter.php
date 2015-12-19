@@ -24,17 +24,19 @@ abstract class AbstractDummyAdapter implements AdapterInterface
     /**
      * @param string $method
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     protected function getFilePath($method, $path, array $options = [])
     {
         $key = md5($method . $path . serialize($options));
 
-        $tmp = explode('/', $path);
+        $tmp  = explode('/', $path);
         $tmp2 = explode('.', $tmp[1]);
 
         return sprintf('%s/%s_%s_%s.json', $this->dir, $tmp[0], $method, $tmp2[0]);
+
         return sprintf('%s/%s_%s.json', $this->dir, $method, $key);
     }
 }
