@@ -43,8 +43,14 @@ class IssueRepositoryTest extends ClientTest
         $this->assertTrue($user instanceof LazyLoadingInterface);
         $this->assertTrue($user->getProxyInitializer() instanceof \Closure);;
 
-        $name = $user->getLogin();
-        $this->assertEquals("admin", $name);
+
+        $name = $user->getName();
+        $this->assertEquals("Redmine Admin", $name);
+        $this->assertTrue($user instanceof LazyLoadingInterface);
+        $this->assertTrue($user->getProxyInitializer() instanceof \Closure);
+
+        $login = $user->getLogin();
+        $this->assertEquals("admin", $login);
         $this->assertTrue($user->getProxyInitializer() === null);
     }
 }
