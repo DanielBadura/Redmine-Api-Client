@@ -26,7 +26,7 @@ class ProjectRepository extends AbstractRepository
             throw new RepositoryException("Can't find project. No id given!");
         }
 
-        $result = $this->client->get('/projects/' . $id . '.json');
+        $result = $this->client->get('projects/' . $id . '.json');
 
         $result = json_decode($result, true);
         $result = json_encode($result['project']);
@@ -60,8 +60,8 @@ class ProjectRepository extends AbstractRepository
 
         $options = ['body' => $projectJson];
 
-        if ($project->id && $this->find($project->id)) {
-            $result = $this->client->put('projects/' . $project->id . '.json', $options);
+        if ($project->getId() && $this->find($project->getId())) {
+            $result = $this->client->put('projects/' . $project->getId() . '.json', $options);
         } else {
             $result = $this->client->post('projects.json', $options);
         }
@@ -83,14 +83,14 @@ class ProjectRepository extends AbstractRepository
     public function delete(Project $project)
     {
         try {
-            $this->find($project->id);
+            $this->find($project->getId());
         } catch (RepositoryException $e) {
             throw new RepositoryException("Couldn't delete project. No id given!", $e->getCode(), $e);
         }
 
         $options = [];
 
-        $result = $this->client->delete('projects/' . $project->id . '.json', $options);
+        $result = $this->client->delete('projects/' . $project->getId() . '.json', $options);
 
         if ($result) {
             return true;

@@ -60,8 +60,8 @@ class UserRepository extends AbstractRepository
 
         $options = ['body' => $jsonUser];
 
-        if ($user->id != null && $this->find($user->id)) {
-            $result = $this->client->put('users/' . $user->id . '.json', $options);
+        if ($user->getId() != null && $this->find($user->getId())) {
+            $result = $this->client->put('users/' . $user->getId() . '.json', $options);
         } else {
             $result = $this->client->post('users.json', $options);
         }
@@ -80,13 +80,13 @@ class UserRepository extends AbstractRepository
      */
     public function delete(User $user)
     {
-        if (!$this->find($user->id)) {
+        if (!$this->find($user->getId())) {
             return false;
         }
 
         $options = [];
 
-        $result = $this->client->delete('user/' . $user->id . '.json', $options);
+        $result = $this->client->delete('user/' . $user->getId() . '.json', $options);
 
         if ($result) {
             return true;

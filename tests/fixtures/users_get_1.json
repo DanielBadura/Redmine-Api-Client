@@ -1,0 +1,13 @@
+{
+    "user": {
+        "id": 1,
+        "login": "admin",
+        "firstname": "Redmine",
+        "lastname": "Admin",
+        "mail": "admin@example.net",
+        "created_on": "2015-11-23T18:41:45Z",
+        "last_login_on": "2015-12-18T17:49:24Z",
+        "api_key": "0s9d8gdhdf7f097fsd702374sdf70293709fsd0f9s7df",
+        "status": 1
+    }
+}

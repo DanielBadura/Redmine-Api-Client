@@ -29,12 +29,8 @@ class IssueRepository extends AbstractRepository
 
         $result = json_decode($result, true);
         $result = json_encode($result['issue']);
-        $issue = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
 
-        $hydrate = new IssueProjectHydration();
-        $issue = $hydrate->hydrateIssue($issue, $this->client);
-
-        return $issue;
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\Issue');
     }
 
     /**
@@ -51,10 +47,10 @@ class IssueRepository extends AbstractRepository
         }
 
         $issues = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
-
+/*
         $hydrate = new IssueProjectHydration();
         $issues = $hydrate->hydrateManyIssues($issues, $this->client);
-
+*/
         return $issues;
     }
 
@@ -71,13 +67,13 @@ class IssueRepository extends AbstractRepository
 
         $options = ['body' => $jsonIssue];
 
-        if ($issue->id) {
-            $result = $this->client->put('issues/' . $issue->id . '.json', $options);
+        if ($issue->getId()) {
+            $result = $this->client->put('issues/' . $issue->getId() . '.json', $options);
         } else {
             $result = $this->client->post('issues.json', $options);
         }
 
-        $issue->notes = null; // remove note
+        $issue->setNotes(null); // remove note
 
         if ($result) {
             return $result;
@@ -95,13 +91,13 @@ class IssueRepository extends AbstractRepository
      */
     public function delete(Issue $issue)
     {
-        if (! $this->find($issue->id)) {
+        if (! $this->find($issue->getId())) {
             return false;
         }
 
         $options = [];
 
-        $result = $this->client->delete('issues/' . $issue->id . '.json', $options);
+        $result = $this->client->delete('issues/' . $issue->getId() . '.json', $options);
 
         if (! $result) {
             throw new RedmineApiException('Could not delete the Issue.');
@@ -118,18 +114,18 @@ class IssueRepository extends AbstractRepository
      */
     public function addWatcher(Issue $issue, User $user)
     {
-        if (! $this->find($issue->id)) {
+        if (! $this->find($issue->getId())) {
             return false;
         }
 
         $userRepository = $this->client->getUserRepository();
 
-        if (! $userRepository->find($user->id)) {
+        if (! $userRepository->find($user->getId())) {
             return false;
         }
 
         $body = [
-            'user_id' => $user->id
+            'user_id' => $user->getId()
         ];
 
         $body = json_encode($body); // Don't know if serialiazation would be overkill or if this right now does just fine
@@ -138,7 +134,7 @@ class IssueRepository extends AbstractRepository
             'body' => $body
         ];
 
-        $result = $this->client->post('/issues/' . $issue->id . '/watchers.json', $options);
+        $result = $this->client->post('/issues/' . $issue->getId() . '/watchers.json', $options);
 
         if (! $result) {
             return false;
@@ -155,17 +151,17 @@ class IssueRepository extends AbstractRepository
      */
     public function deleteWatcher(Issue $issue, User $user)
     {
-        if (! $this->find($issue->id)) {
+        if (! $this->find($issue->getId())) {
             return false;
         }
 
         $userRepository = $this->client->getUserRepository();
 
-        if (! $userRepository->find($user->id)) {
+        if (! $userRepository->find($user->getId())) {
             return false;
         }
 
-        $result = $this->client->delete('/issues/' . $issue->id . '/watchers/' . $user->id . '.json');
+        $result = $this->client->delete('/issues/' . $issue->getId() . '/watchers/' . $user->getId() . '.json');
 
         if (! $result) {
             return false;
