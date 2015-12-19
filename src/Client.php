@@ -41,8 +41,7 @@ class Client
     public function __construct(AdapterInterface $adapter)
     {
         AnnotationRegistry::registerLoader('class_exists');
-        $hydration = new Hydration($this);
-
+        $hydration        = new Hydration($this);
         $this->adapter    = $adapter;
         $this->serializer = SerializerBuilder::create()
             ->configureHandlers(function (HandlerRegistry $registry) use ($hydration) {
