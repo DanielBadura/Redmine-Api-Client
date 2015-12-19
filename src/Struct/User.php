@@ -215,4 +215,12 @@ class User
     {
         $this->password = $password;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->firstname . ' ' . $this->lastname;
+    }
 }

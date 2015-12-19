@@ -41,9 +41,7 @@ class IssueRepositoryTest extends ClientTest
 
         $this->assertEquals(1, $id);
         $this->assertTrue($user instanceof LazyLoadingInterface);
-        $this->assertTrue($user->getProxyInitializer() instanceof \Closure);
-
-        dump($user);
+        $this->assertTrue($user->getProxyInitializer() instanceof \Closure);;
 
         $name = $user->getLogin();
         $this->assertEquals("admin", $name);
