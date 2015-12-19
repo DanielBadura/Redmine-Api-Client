@@ -46,14 +46,7 @@ class IssueRepository extends AbstractRepository
             throw new RedmineApiException('Could not find any issues.');
         }
 
-        $issues = $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
-
-        /*
-                $hydrate = new IssueProjectHydration();
-                $issues = $hydrate->hydrateManyIssues($issues, $this->client);
-        */
-
-        return $issues;
+        return $this->deserialize($result, 'DanielBadura\Redmine\Api\Struct\IssueResult')->issues;
     }
 
     /**
