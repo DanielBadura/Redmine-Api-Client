@@ -39,6 +39,7 @@ abstract class AbstractRepository implements RepositoryInterface
 
     /**
      * @param object $object
+     *
      * @return string
      */
     protected function serialize($object)
@@ -49,6 +50,7 @@ abstract class AbstractRepository implements RepositoryInterface
     /**
      * @param string $json
      * @param string $type
+     *
      * @return object
      */
     protected function deserialize($json, $type)

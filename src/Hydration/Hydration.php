@@ -42,7 +42,7 @@ class Hydration
             return $projectStruct;
         }
 
-        $factory           = new LazyLoadingValueHolderFactory();
+        $factory = new LazyLoadingValueHolderFactory();
 
         $initializer = function (
             &$wrappedObject,
@@ -82,7 +82,7 @@ class Hydration
             return $userStruct;
         }
 
-        $factory           = new LazyLoadingValueHolderFactory();
+        $factory = new LazyLoadingValueHolderFactory();
 
         $initializer = function (
             &$wrappedObject,

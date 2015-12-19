@@ -13,7 +13,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
     protected $adapter;
 
     /**
-     * @param string $dir
+     * @param string           $dir
      * @param AdapterInterface $adapter
      */
     public function __construct($dir, AdapterInterface $adapter)
@@ -25,7 +25,7 @@ class DummyRecordAdapter extends AbstractDummyAdapter
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
      *
      * @return string
      */
@@ -36,7 +36,8 @@ class DummyRecordAdapter extends AbstractDummyAdapter
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function post($path, array $options = [])
@@ -46,7 +47,8 @@ class DummyRecordAdapter extends AbstractDummyAdapter
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function put($path, array $options = [])
@@ -56,7 +58,8 @@ class DummyRecordAdapter extends AbstractDummyAdapter
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function delete($path, array $options = [])
@@ -66,7 +69,8 @@ class DummyRecordAdapter extends AbstractDummyAdapter
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function patch($path, array $options = [])
@@ -77,7 +81,8 @@ class DummyRecordAdapter extends AbstractDummyAdapter
     /**
      * @param string $method
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     private function record($method, $path, array $options = [])

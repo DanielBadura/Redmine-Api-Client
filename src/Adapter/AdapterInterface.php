@@ -9,35 +9,40 @@ interface AdapterInterface
 {
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function get($path, array $options = []);
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function post($path, array $options = []);
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function put($path, array $options = []);
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function delete($path, array $options = []);
 
     /**
      * @param string $path
-     * @param array $options
+     * @param array  $options
+     *
      * @return string
      */
     public function patch($path, array $options = []);

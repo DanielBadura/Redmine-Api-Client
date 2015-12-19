@@ -2,7 +2,7 @@
 
 namespace DanielBadura\Redmine\Api\Proxy;
 
-class Project 
+class Project
 {
     /**
      * @var int

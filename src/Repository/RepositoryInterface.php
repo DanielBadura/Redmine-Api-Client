@@ -11,6 +11,7 @@ interface RepositoryInterface
      * Find one entity by Id
      *
      * @param int $id
+     *
      * @return object
      */
     public function find($id);
