@@ -30,13 +30,22 @@ abstract class AbstractDummyAdapter implements AdapterInterface
      */
     protected function getFilePath($method, $path, array $options = [])
     {
-        $key = md5($method . $path . serialize($options));
+        $slashed = false;
 
-        $tmp  = explode('/', $path);
-        $tmp2 = explode('.', $tmp[1]);
+        if (strpos($path, '/') !== false) {
+            $pathWithSlashArray = explode('/', $path);
+            $type = $pathWithSlashArray[0];
+            $path = $pathWithSlashArray[1];
+            $slashed = true;
+        }
 
-        return sprintf('%s/%s_%s_%s.json', $this->dir, $tmp[0], $method, $tmp2[0]);
+        $typeOrIdArray = explode('.', $path);
+        $typeOrId = $typeOrIdArray[0];
 
-        return sprintf('%s/%s_%s.json', $this->dir, $method, $key);
+        if ($slashed) {
+            return sprintf('%s/%s_%s_%s.json', $this->dir, $type, $method, $typeOrId);
+        }
+
+        return sprintf('%s/%s_%s.json', $this->dir, $typeOrId, $method);
     }
 }
