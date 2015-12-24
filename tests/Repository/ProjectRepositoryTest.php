@@ -5,6 +5,9 @@ namespace DanielBadura\Redmine\Api\Tests\Repository;
 
 use DanielBadura\Redmine\Api\Tests\ClientTest;
 
+/**
+ * @author Daniel Badura <d.m.badura@googlemail.com>
+ */
 class ProjectRepositoryTest extends ClientTest
 {
     public function testFindProject()

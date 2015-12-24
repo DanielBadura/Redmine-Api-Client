@@ -5,6 +5,9 @@ namespace DanielBadura\Redmine\Api\Tests\Repository;
 use DanielBadura\Redmine\Api\Tests\ClientTest;
 use ProxyManager\Proxy\LazyLoadingInterface;
 
+/**
+ * @author Daniel Badura <d.m.badura@googlemail.com>
+ */
 class IssueRepositoryTest extends ClientTest
 {
     public function testFindIssue()
