@@ -4,7 +4,7 @@ namespace DanielBadura\Redmine\Api;
 
 use DanielBadura\Redmine\Api\Adapter\AdapterInterface;
 use DanielBadura\Redmine\Api\Handler\IssueHandler;
-use DanielBadura\Redmine\Api\Hydration\Hydration;
+use DanielBadura\Redmine\Api\Hydration\Hydrator;
 use DanielBadura\Redmine\Api\Repository\AttachmentRepository;
 use DanielBadura\Redmine\Api\Repository\IssueRepository;
 use DanielBadura\Redmine\Api\Repository\ProjectRepository;
@@ -41,7 +41,7 @@ class Client
     public function __construct(AdapterInterface $adapter)
     {
         AnnotationRegistry::registerLoader('class_exists');
-        $hydration        = new Hydration($this);
+        $hydration        = new Hydrator($this);
         $this->adapter    = $adapter;
         $this->serializer = SerializerBuilder::create()
             ->configureHandlers(function (HandlerRegistry $registry) use ($hydration) {
@@ -160,13 +160,5 @@ class Client
     public function deserialize($json, $type)
     {
         return $this->serializer->deserialize($json, $type, 'json');
-    }
-
-    /**
-     * @return IdentityMapper
-     */
-    public function getMapper()
-    {
-        return $this->mapper;
     }
 }

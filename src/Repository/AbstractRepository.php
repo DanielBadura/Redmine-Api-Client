@@ -3,7 +3,7 @@
 namespace DanielBadura\Redmine\Api\Repository;
 
 use DanielBadura\Redmine\Api\Client;
-use DanielBadura\Redmine\Api\IdentityMapper;
+use DanielBadura\Redmine\Api\IdentityMap;
 
 /**
  * @author David Badura <badura@simplethings.de>
@@ -16,9 +16,9 @@ abstract class AbstractRepository implements RepositoryInterface
     protected $client;
 
     /**
-     * @var IdentityMapper
+     * @var IdentityMap
      */
-    protected $mapper;
+    protected $map;
 
     /**
      * @param Client $client
@@ -26,15 +26,15 @@ abstract class AbstractRepository implements RepositoryInterface
     public function __construct(Client $client)
     {
         $this->client = $client;
-        $this->mapper = new IdentityMapper();
+        $this->map = new IdentityMap();
     }
 
     /**
-     * @return IdentityMapper
+     * @return IdentityMap
      */
-    public function getMapper()
+    public function getMap()
     {
-        return $this->mapper;
+        return $this->map;
     }
 
     /**
