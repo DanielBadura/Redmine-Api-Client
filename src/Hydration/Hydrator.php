@@ -12,7 +12,7 @@ use ProxyManager\Proxy\LazyLoadingInterface;
 /**
  * @author Daniel Badura <d.m.badura@googlemail.com>
  */
-class Hydration
+class Hydrator
 {
     /**
      * @var Client
@@ -56,7 +56,7 @@ class Hydration
             } else {
                 $wrappedObject = $projectRepository->find($project['id']);
                 $proxy->setProxyInitializer(null);
-                $projectRepository->getMapper()->setIdentity($wrappedObject->getId(), $wrappedObject);
+                $projectRepository->getMap()->setIdentity($wrappedObject->getId(), $wrappedObject);
             }
 
             return true;
@@ -96,7 +96,7 @@ class Hydration
             } else {
                 $wrappedObject = $userRepository->find($user['id']);
                 $proxy->setProxyInitializer(null);
-                $userRepository->getMapper()->setIdentity($wrappedObject->getId(), $wrappedObject);
+                $userRepository->getMap()->setIdentity($wrappedObject->getId(), $wrappedObject);
             }
 
             return true;
@@ -115,8 +115,8 @@ class Hydration
      */
     private function getIdentity(array $data, AbstractRepository $repo)
     {
-        if ($repo->getMapper()->hasIdentity($data['id'])) {
-            return $repo->getMapper()->getIdentity($data['id']);
+        if ($repo->getMap()->hasIdentity($data['id'])) {
+            return $repo->getMap()->getIdentity($data['id']);
         }
 
         return null;

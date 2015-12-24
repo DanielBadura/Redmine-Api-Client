@@ -2,7 +2,7 @@
 
 namespace DanielBadura\Redmine\Api\Handler;
 
-use DanielBadura\Redmine\Api\Hydration\Hydration;
+use DanielBadura\Redmine\Api\Hydration\Hydrator;
 use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
@@ -11,14 +11,14 @@ use JMS\Serializer\VisitorInterface;
 class IssueHandler implements SubscribingHandlerInterface
 {
     /**
-     * @var Hydration
+     * @var Hydrator
      */
     private $hydration;
 
     /**
-     * @param Hydration $hydration
+     * @param Hydrator $hydration
      */
-    public function __construct(Hydration $hydration)
+    public function __construct(Hydrator $hydration)
     {
         $this->hydration = $hydration;
     }
