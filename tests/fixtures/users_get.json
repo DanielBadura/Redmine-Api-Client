@@ -1,6 +1,14 @@
 {
     "users": [
         {
+            "id": 2,
+            "login": "test",
+            "firstname": "test",
+            "lastname": "test",
+            "mail": "test@example.de",
+            "created_on": "2015-12-08T22:14:22Z"
+        },
+        {
             "id": 1,
             "login": "admin",
             "firstname": "Redmine",
@@ -8,14 +16,6 @@
             "mail": "admin@example.net",
             "created_on": "2015-11-23T18:41:45Z",
             "last_login_on": "2015-12-24T21:15:37Z"
-        },
-        {
-            "id": 2,
-            "login": "test",
-            "firstname": "test",
-            "lastname": "test",
-            "mail": "test@example.de",
-            "created_on": "2015-12-08T22:14:22Z"
         }
     ],
     "total_count": 2,

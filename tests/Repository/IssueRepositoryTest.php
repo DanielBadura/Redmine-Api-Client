@@ -17,6 +17,17 @@ class IssueRepositoryTest extends ClientTest
         $this->assertEquals(1, $issue->getId());
     }
 
+    public function testFindAll()
+    {
+        $issues = $this->client->getIssueRepository()->findAll();
+
+        $id = count($issues);
+
+        foreach ($issues as $issue) {
+            $this->assertEquals($id--, $issue->getId());
+        }
+    }
+
     public function testProjectLazyLoad()
     {
         $issue   = $this->client->getIssueRepository()->find(1);
