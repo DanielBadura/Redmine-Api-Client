@@ -1,0 +1,27 @@
+{
+    "projects": [
+        {
+            "id": 2,
+            "name": "Test2",
+            "identifier": "test2",
+            "description": "",
+            "status": 1,
+            "is_public": true,
+            "created_on": "2015-11-23T23:23:49Z",
+            "updated_on": "2015-11-23T23:23:49Z"
+        },
+        {
+            "id": 1,
+            "name": "test",
+            "identifier": "test",
+            "description": "",
+            "status": 1,
+            "is_public": true,
+            "created_on": "2015-11-23T22:08:58Z",
+            "updated_on": "2015-11-23T22:08:58Z"
+        }
+    ],
+    "total_count": 2,
+    "offset": 0,
+    "limit": 25
+}

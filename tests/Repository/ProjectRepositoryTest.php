@@ -16,4 +16,15 @@ class ProjectRepositoryTest extends ClientTest
 
         $this->assertEquals(1, $project->getId());
     }
+
+    public function testFindAll()
+    {
+        $projects = $this->client->getProjectRepository()->findAll();
+
+        $id = count($projects);
+
+        foreach ($projects as $project) {
+            $this->assertEquals($id--, $project->getId());
+        }
+    }
 } 

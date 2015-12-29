@@ -19,10 +19,10 @@ class UserRepositoryTest extends ClientTest
     {
         $users = $this->client->getUserRepository()->findAll();
 
-        $id = 1;
+        $id = count($users);
 
         foreach ($users as $user) {
-            $this->assertEquals($id++, $user->getId());
+            $this->assertEquals($id--, $user->getId());
         }
     }
 } 

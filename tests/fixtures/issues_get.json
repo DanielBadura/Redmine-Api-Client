@@ -1,0 +1,34 @@
+{
+    "issues": [
+        {
+            "id": 2,
+            "project": {"id": 2, "name": "Test2"},
+            "tracker": {"id": 1, "name": "Fehler"},
+            "status": {"id": 1, "name": "Neu"},
+            "priority": {"id": 2, "name": "Normal"},
+            "author": {"id": 1, "name": "Redmine Admin"},
+            "subject": "te",
+            "start_date": "2015-11-25",
+            "done_ratio": 0,
+            "created_on": "2015-11-24T23:38:23Z",
+            "updated_on": "2015-11-24T23:38:23Z"
+        },
+        {
+            "id": 1,
+            "project": {"id": 2, "name": "Test2"},
+            "tracker": {"id": 1, "name": "Fehler"},
+            "status": {"id": 1, "name": "Neu"},
+            "priority": {"id": 2, "name": "Normal"},
+            "author": {"id": 1, "name": "Redmine Admin"},
+            "subject": "test",
+            "description": "te",
+            "start_date": "2015-11-24",
+            "done_ratio": 0,
+            "created_on": "2015-11-23T23:26:06Z",
+            "updated_on": "2015-11-23T23:26:56Z"
+        }
+    ],
+    "total_count": 2,
+    "offset": 0,
+    "limit": 25
+}
